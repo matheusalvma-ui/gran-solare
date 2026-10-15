@@ -513,7 +513,7 @@ async function saveForm(e){
   const tenantForWrite=openedKind==="subscriptions"?(editingRecord?.company_id||payload.company_id):company.id;
   const write=editingRecord?await db.from(spec.table).update(payload).eq("id",editingRecord.id).eq("company_id",tenantForWrite).select("id").maybeSingle():await db.from(spec.table).insert(payload).select("id").maybeSingle();if(write.error)throw write.error;
   if(openedKind!=="companies"&&openedKind!=="plans"){
-   try{await db.from("audit_events").insert({company_id:company.id,actor_user_id:session.user.id,action:openedKind+(editingRecord?".updated":".created"),resource_type:spec.table,resource_id:editingRecord?.id?String(editingRecord.id):(write.data?.id?String(write.data.id):null),outcome:"success",details:{fields:Object.keys(payload).filter(k=>!["company_id","id"].includes(k))}})}catch(_){}
+   try{await db.from("audit_events").insert({company_id:openedKind==="subscriptions"?null:company.id,actor_user_id:session.user.id,action:openedKind+(editingRecord?".updated":".created"),resource_type:spec.table,resource_id:editingRecord?.id?String(editingRecord.id):(write.data?.id?String(write.data.id):null),outcome:"success",details:{target_company_id:openedKind==="subscriptions"?payload.company_id:company.id,fields:Object.keys(payload).filter(k=>!["company_id","id"].includes(k))}})}catch(_){}
   }
   const wasEditing=Boolean(editingRecord);editingRecord=null;$("modal-backdrop").classList.remove("open");await render();toast(wasEditing?"Registro atualizado.":"Cadastro salvo.");
  }catch(ex){$("form-error").textContent=ex.message||"Não foi possível salvar."}
