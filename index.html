@@ -210,10 +210,10 @@ const iso=()=>{const d=new Date();return d.getFullYear()+"-"+String(d.getMonth()
 let session=null,profile=null,company=null,currentPage="dashboard",lastLoaded={};
 const labels={dashboard:"Visão geral",monitoring:"Monitoramento",analysis:"Análise energética",customers:"Clientes",plants:"Usinas",bills:"Faturas e economia",generation:"Geração",leads:"CRM / Leads",tasks:"Tarefas comerciais",proposals:"Propostas",contracts:"Contratos",tickets:"Chamados",maintenance:"Manutenção",notifications:"Notificações",reports:"Relatórios",users:"Usuários e acessos",integrations:"Integrações",organization:"Organização",subscription:"Plano e assinatura",platform:"Administração Solara",audit:"Auditoria e segurança",portal:"Portal do cliente"};
 const specs={
- customers:{table:"customers",title:"Clientes",desc:"Cadastro central, contatos, documentos e relacionamento.",fields:[["name","Nome / razão social","text",true],["tax_id","CPF/CNPJ","text",false],["email","E-mail","email",false],["phone","Telefone","tel",false],["street_address","Endereço","text",false],["city","Cidade","text",false],["state","Estado","text",false],["utility_name","Concessionária","text",false]]},
- plants:{table:"solar_plants",title:"Usinas",desc:"Instalações, capacidade, metas e comunicação.",fields:[["name","Nome da usina","text",true],["customer_id","Cliente","customer",true],["address","Endereço","text",false],["latitude","Latitude","number",false],["longitude","Longitude","number",false],["installed_capacity_kwp","Potência (kWp)","number",false],["expected_daily_kwh","Meta diária (kWh)","number",false],["monthly_generation_goal_kwh","Meta mensal (kWh)","number",false],["inverter_brand","Fabricante do inversor","text",false],["inverter_model","Modelo do inversor","text",false]]},
- bills:{table:"energy_bills",title:"Faturas e economia",desc:"Consumo, vencimentos, pagamento e estimativas registradas.",fields:[["customer_id","Cliente","customer",true],["solar_plant_id","Usina","plant",false],["bill_reference","Referência","text",true],["utility_name","Concessionária","text",true],["billing_period_start","Início do consumo","date",false],["billing_period_end","Fim do consumo","date",false],["consumption_kwh","Consumo (kWh)","number",false],["amount_without_solar","Valor de referência (R$)","number",false],["amount_paid","Valor pago (R$)","number",false],["estimated_savings","Economia estimada (R$)","number",false],["tariff_per_kwh","Tarifa (R$/kWh)","number",false],["due_date","Vencimento","date",false],["paid_at","Pagamento","date",false]]},
- leads:{table:"leads",title:"CRM e Leads",desc:"Funil comercial e valor potencial.",fields:[["name","Nome / empresa","text",true],["email","E-mail","email",false],["phone","Telefone","tel",false],["source","Origem","text",false],["estimated_capacity_kwp","Potência potencial (kWp)","number",false],["estimated_monthly_value","Valor mensal potencial (R$)","number",false],["notes","Observações","textarea",false]]},
+ customers:{table:"customers",title:"Clientes",desc:"Cadastro central, contatos, documentos e relacionamento.",fields:[["name","Nome / razão social","text",true],["tax_id","CPF/CNPJ","text",false],["email","E-mail","email",false],["phone","Telefone","tel",false],["street_address","Endereço","text",false],["city","Cidade","text",false],["state","Estado","text",false],["utility_name","Concessionária","text",false],["status","Status","text",false]]},
+ plants:{table:"solar_plants",title:"Usinas",desc:"Instalações, capacidade, metas e comunicação.",fields:[["name","Nome da usina","text",true],["customer_id","Cliente","customer",true],["address","Endereço","text",false],["latitude","Latitude","number",false],["longitude","Longitude","number",false],["installed_capacity_kwp","Potência (kWp)","number",false],["expected_daily_kwh","Meta diária (kWh)","number",false],["monthly_generation_goal_kwh","Meta mensal (kWh)","number",false],["inverter_brand","Fabricante do inversor","text",false],["inverter_model","Modelo do inversor","text",false],["status","Status da usina","text",false]]},
+ bills:{table:"energy_bills",title:"Faturas e economia",desc:"Consumo, vencimentos, pagamento e estimativas registradas.",fields:[["customer_id","Cliente","customer",true],["solar_plant_id","Usina","plant",false],["bill_reference","Referência","text",true],["utility_name","Concessionária","text",true],["billing_period_start","Início do consumo","date",false],["billing_period_end","Fim do consumo","date",false],["consumption_kwh","Consumo (kWh)","number",false],["amount_without_solar","Valor de referência (R$)","number",false],["amount_paid","Valor pago (R$)","number",false],["estimated_savings","Economia estimada (R$)","number",false],["tariff_per_kwh","Tarifa (R$/kWh)","number",false],["due_date","Vencimento","date",false],["paid_at","Pagamento","date",false],["payment_status","Status de pagamento","text",false]]},
+ leads:{table:"leads",title:"CRM e Leads",desc:"Funil comercial e valor potencial.",fields:[["name","Nome / empresa","text",true],["email","E-mail","email",false],["phone","Telefone","tel",false],["source","Origem","text",false],["estimated_capacity_kwp","Potência potencial (kWp)","number",false],["estimated_monthly_value","Valor mensal potencial (R$)","number",false],["notes","Observações","textarea",false],["stage","Etapa comercial","text",false]]},
  tasks:{table:"crm_tasks",title:"Tarefas comerciais",desc:"Retornos, ligações, reuniões e prazos.",fields:[["title","Tarefa","text",true],["description","Descrição","textarea",false],["task_type","Tipo: call, email, meeting, follow_up","text",true],["priority","Prioridade: low, normal, high, urgent","text",true],["due_at","Prazo","datetime-local",false],["lead_id","Lead","lead",false],["customer_id","Cliente","customer",false]]},
  proposals:{table:"proposals",title:"Propostas",desc:"Escopo, valor, validade e situação.",fields:[["title","Título","text",true],["customer_id","Cliente","customer",false],["lead_id","Lead","lead",false],["proposal_number","Número da proposta","text",false],["scope","Escopo","textarea",false],["amount","Valor (R$)","number",true],["payment_terms","Condição de pagamento","text",false],["valid_until","Validade","date",false]]},
  contracts:{table:"contracts",title:"Contratos",desc:"Vigência, valor, cliente e documentos.",fields:[["title","Título","text",true],["customer_id","Cliente","customer",false],["solar_plant_id","Usina","plant",false],["contract_number","Número","text",false],["contract_type","Tipo","text",false],["amount","Valor contratado (R$)","number",true],["start_date","Início","date",false],["end_date","Término","date",false],["renewal_index","Índice de reajuste","text",false]]},
@@ -271,11 +271,14 @@ const colMap={
  audit:[["Data",r=>dt(r.created_at)],["Usuário",r=>String(r.actor_user_id||"").slice(0,8)],["Ação",r=>r.action],["Recurso",r=>r.resource_type],["ID do recurso",r=>r.resource_id],["Resultado",r=>r.outcome,"pill"]]
 };
 colMap.profiles=colMap.users;
+const editRolesByTable={customers:["platform_admin","company_admin","manager","commercial"],plants:["platform_admin","company_admin","manager","operator"],bills:["platform_admin","company_admin","manager","financial"],leads:["platform_admin","company_admin","manager","commercial"],tasks:["platform_admin","company_admin","manager","commercial"],proposals:["platform_admin","company_admin","manager","commercial"],contracts:["platform_admin","company_admin","manager","commercial","financial"],maintenance:["platform_admin","company_admin","manager","operator"]};
 function renderTable(key,title,desc,addKind){
- const rows=rowsFor(key);const cols=colMap[key]||[];const filtered=rows.filter(r=>cols.some(c=>String(c[1](r)??"").toLowerCase().includes(String(window.solaraSearch||"").toLowerCase())));
- let out=head("GESTÃO",title,desc,addKind)+'<div class="panel"><div class="toolbar"><input class="field" id="solara-search" placeholder="Pesquisar registros..." value="'+esc(window.solaraSearch||"")+'"><span class="muted">'+filtered.length+' registro(s)</span></div><div class="table-wrap"><table><thead><tr>'+cols.map(c=>'<th>'+esc(c[0])+'</th>').join("")+'</tr></thead><tbody>';
- if(!filtered.length)out+='<tr><td colspan="'+cols.length+'" class="empty">Nenhum registro disponível para este filtro.</td></tr>';
- filtered.forEach(r=>{out+='<tr>'+cols.map(c=>{let val=c[1](r);if(c[2]==="pill")return '<td>'+pills(val)+'</td>';if(c[2]==="ticket")return '<td><button class="btn" data-solara-status="ticket" data-id="'+esc(r.id)+'" data-status="'+esc(r.status)+'">Avançar status</button></td>';if(c[2]==="workorder")return '<td><button class="btn" data-solara-status="workorder" data-id="'+esc(r.id)+'" data-status="'+esc(r.status)+'">Avançar status</button></td>';if(c[2]==="leadstage")return '<td>'+(['won','lost'].includes(r.stage)?'Finalizada':'<button class="btn" data-solara-status="lead" data-id="'+esc(r.id)+'" data-status="'+esc(r.stage)+'">Avançar etapa</button>')+'</td>';if(c[2]==="notification"&&!r.read_at)return '<td><button class="btn" data-solara-status="notification" data-id="'+esc(r.id)+'">Marcar lida</button></td>';return '<td>'+esc(val??"—")+'</td>'}).join("")+'</tr>'});
+ const rows=rowsFor(key),cols=colMap[key]||[];
+ const filtered=rows.filter(r=>cols.some(c=>String(c[1](r)??"").toLowerCase().includes(String(window.solaraSearch||"").toLowerCase())));
+ const canEdit=Boolean(editRolesByTable[key]&&editRolesByTable[key].includes(profile.role));
+ let out=head("GESTÃO",title,desc,addKind)+'<div class="panel"><div class="toolbar"><input class="field" id="solara-search" placeholder="Pesquisar registros..." value="'+esc(window.solaraSearch||"")+'"><span class="muted">'+filtered.length+' registro(s)</span></div><div class="table-wrap"><table><thead><tr>'+cols.map(c=>'<th>'+esc(c[0])+'</th>').join("")+(canEdit?'<th>Ação</th>':"")+'</tr></thead><tbody>';
+ if(!filtered.length)out+='<tr><td colspan="'+(cols.length+(canEdit?1:0))+'" class="empty">Nenhum registro disponível para este filtro.</td></tr>';
+ filtered.forEach(r=>{out+='<tr>'+cols.map(c=>{let val=c[1](r);if(c[2]==="pill")return '<td>'+pills(val)+'</td>';if(c[2]==="ticket")return '<td><button class="btn" data-solara-status="ticket" data-id="'+esc(r.id)+'" data-status="'+esc(r.status)+'">Avançar status</button></td>';if(c[2]==="workorder")return '<td><button class="btn" data-solara-status="workorder" data-id="'+esc(r.id)+'" data-status="'+esc(r.status)+'">Avançar status</button></td>';if(c[2]==="leadstage")return '<td>'+(['won','lost'].includes(r.stage)?'Finalizada':'<button class="btn" data-solara-status="lead" data-id="'+esc(r.id)+'" data-status="'+esc(r.stage)+'">Avançar etapa</button>')+'</td>';if(c[2]==="notification"&&!r.read_at)return '<td><button class="btn" data-solara-status="notification" data-id="'+esc(r.id)+'">Marcar lida</button></td>';return '<td>'+esc(val??"—")+'</td>'}).join("")+(canEdit?'<td><button class="btn" data-solara-edit="'+esc(key)+'" data-id="'+esc(r.id)+'">Editar</button></td>':"")+'</tr>'});
  out+='</tbody></table></div></div>';return out;
 }
 function barChart(rows){
@@ -410,7 +413,9 @@ function fieldInput(f){
   task_type:[["call","Ligação"],["email","E-mail"],["meeting","Reunião"],["follow_up","Retorno"],["other","Outro"]],
   maintenance_type:[["preventive","Preventiva"],["corrective","Corretiva"],["inspection","Inspeção"]],
   priority:openedKind==="maintenance"?[["low","Baixa"],["normal","Normal"],["high","Alta"],["critical","Crítica"]]:[["low","Baixa"],["normal","Normal"],["high","Alta"],["urgent","Urgente"]],
-  status:openedKind==="companies"?[["trial","Em teste"],["active","Ativa"],["suspended","Suspensa"]]:null
+  status:openedKind==="companies"?[["trial","Em teste"],["active","Ativa"],["suspended","Suspensa"]]:openedKind==="customers"?[["active","Ativo"],["inactive","Inativo"]]:openedKind==="plants"?[["active","Ativa"],["inactive","Inativa"],["maintenance","Manutenção"]]:null,
+  payment_status:[["pending","Pendente"],["paid","Paga"],["overdue","Vencida"],["contested","Contestada"]],
+  stage:[["new","Novo"],["first_contact","Primeiro contato"],["contacted","Contato feito"],["qualified","Qualificado"],["meeting","Reunião/diagnóstico"],["diagnosis","Diagnóstico"],["proposal","Proposta enviada"],["negotiation","Negociação"],["won","Ganho"],["lost","Perdido"]]
  };
  if(options[name]){
   const textLabels={role:"Perfil de acesso",task_type:"Tipo de tarefa",maintenance_type:"Tipo de manutenção",priority:"Prioridade",status:"Situação da empresa"};
@@ -431,13 +436,19 @@ function fieldInput(f){
  if(type==="textarea")return '<label>'+esc(label)+'<textarea name="'+esc(name)+'" '+(req?"required":"")+'></textarea></label>';
  return field(name,label,type,req,v);
 }
-let openedKind=null;
-function openForm(kind){
+let openedKind=null,editingRecord=null;
+function openForm(kind,record=null){
+ const editRoles={customers:["platform_admin","company_admin","manager","commercial"],plants:["platform_admin","company_admin","manager","operator"],bills:["platform_admin","company_admin","manager","financial"],leads:["platform_admin","company_admin","manager","commercial"],tasks:["platform_admin","company_admin","manager","commercial"],proposals:["platform_admin","company_admin","manager","commercial"],contracts:["platform_admin","company_admin","manager","commercial","financial"],maintenance:["platform_admin","company_admin","manager","operator"]};
+ if(record&&(!editRoles[kind]||!editRoles[kind].includes(profile.role))){toast("Seu perfil não pode editar este registro.");return}
  if(kind==="companies"&&profile.role!=="platform_admin"){toast("Somente o administrador Solara pode cadastrar empresas.");return}
  if(kind==="plans"&&profile.role!=="platform_admin"){toast("Somente o administrador Solara pode gerenciar planos.");return}
- if(kind==="invite"&&!["platform_admin","company_admin","manager"].includes(profile.role)){toast("Perfil sem permissão para convidar usuários.");return}
+ if(kind==="invite"&& !["platform_admin","company_admin","manager"].includes(profile.role)){toast("Perfil sem permissão para convidar usuários.");return}
  if(!specs[kind]){toast("Formulário não configurado.");return}
- openedKind=kind;const s=specs[kind];$("modal-title").textContent=s.title;$("form-fields").innerHTML=s.fields.map(fieldInput).join("");$("form-error").textContent="";$("modal-backdrop").classList.add("open");
+ editingRecord=record;openedKind=kind;const s=specs[kind];
+ $("modal-title").textContent=record?"Editar — "+s.title:s.title;
+ $("form-fields").innerHTML=s.fields.map(fieldInput).join("");
+ if(record){for(const el of $("record-form").elements){if(!el.name||!Object.prototype.hasOwnProperty.call(record,el.name)||record[el.name]===null)continue;if(el.type==="checkbox")el.checked=Boolean(record[el.name]);else if(el.type==="datetime-local"&&record[el.name])el.value=new Date(record[el.name]).toISOString().slice(0,16);else el.value=String(record[el.name]);}}
+ $("form-error").textContent="";$("modal-backdrop").classList.add("open");
 }
 async function saveForm(e){
  e.preventDefault();const button=e.submitter;if(button){button.disabled=true}
@@ -453,23 +464,23 @@ async function saveForm(e){
   const numeric=["installed_capacity_kwp","expected_daily_kwh","monthly_generation_goal_kwh","latitude","longitude","consumption_kwh","amount_without_solar","amount_paid","estimated_savings","estimated_capacity_kwp","estimated_monthly_value","tariff_per_kwh","amount","price_monthly","price_yearly","max_users","max_customers","max_plants","max_integrations","history_days","api_requests_per_day","polling_interval_minutes"];
   numeric.forEach(k=>{if(payload[k]!==undefined&&payload[k]!==null)payload[k]=Number(payload[k])});
   if(openedKind!=="companies"&&openedKind!=="plans")payload.company_id=company.id;
-  if(openedKind==="customers")payload.status="active";
-  if(openedKind==="plants"){payload.status="active";payload.inverter_integration="manual";if(payload.latitude===null)delete payload.latitude;if(payload.longitude===null)delete payload.longitude}
-  if(openedKind==="bills"){payload.amount_paid=Number(payload.amount_paid||0);payload.consumption_kwh=Number(payload.consumption_kwh||0);payload.estimated_savings=Number(payload.estimated_savings||0);payload.payment_status=payload.paid_at?"paid":"pending"}
+  if(openedKind==="customers"&&!editingRecord&&!payload.status)payload.status="active";
+  if(openedKind==="plants"){if(!editingRecord&&!payload.status)payload.status="active";payload.inverter_integration=payload.inverter_integration||"manual";if(payload.latitude===null)delete payload.latitude;if(payload.longitude===null)delete payload.longitude}
+  if(openedKind==="bills"){payload.amount_paid=Number(payload.amount_paid||0);payload.consumption_kwh=Number(payload.consumption_kwh||0);payload.estimated_savings=Number(payload.estimated_savings||0);payload.payment_status=payload.paid_at?"paid":(payload.payment_status||"pending")}
   if(openedKind==="tickets"){payload.created_by=session.user.id;payload.status="open";payload.priority=payload.priority||"normal"}
-  if(openedKind==="leads")payload.stage="new";
-  if(openedKind==="tasks"){payload.created_by=session.user.id;payload.status="open";if(payload.due_at)payload.due_at=new Date(payload.due_at).toISOString()}
-  if(openedKind==="proposals"){payload.created_by=session.user.id;payload.status="draft"}
-  if(openedKind==="contracts"){payload.created_by=session.user.id;payload.status="draft"}
-  if(openedKind==="maintenance"){payload.opened_by=session.user.id;payload.status="open";if(payload.scheduled_at)payload.scheduled_at=new Date(payload.scheduled_at).toISOString()}
+  if(openedKind==="leads"&&!editingRecord&&!payload.stage)payload.stage="new";
+  if(openedKind==="tasks"){if(!editingRecord){payload.created_by=session.user.id;payload.status="open"}if(payload.due_at)payload.due_at=new Date(payload.due_at).toISOString()}
+  if(openedKind==="proposals"&&!editingRecord){payload.created_by=session.user.id;payload.status="draft"}
+  if(openedKind==="contracts"&&!editingRecord){payload.created_by=session.user.id;payload.status="draft"}
+  if(openedKind==="maintenance"){if(!editingRecord){payload.opened_by=session.user.id;payload.status="open"}if(payload.scheduled_at)payload.scheduled_at=new Date(payload.scheduled_at).toISOString()}
   if(openedKind==="integrations"){payload.created_by=session.user.id;payload.status="pending";payload.polling_interval_minutes=Number(payload.polling_interval_minutes||60)}
   if(openedKind==="companies")payload.slug=String(payload.slug||payload.name).toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"");
   if(openedKind==="plans"){payload.is_active=true;["max_users","max_customers","max_plants","max_integrations","history_days","api_requests_per_day"].forEach(k=>{if(payload[k]===null)delete payload[k]})}
-  const inserted=await db.from(spec.table).insert(payload).select("id").maybeSingle();if(inserted.error)throw inserted.error;
+  const write=editingRecord?await db.from(spec.table).update(payload).eq("id",editingRecord.id).eq("company_id",company.id).select("id").maybeSingle():await db.from(spec.table).insert(payload).select("id").maybeSingle();if(write.error)throw write.error;
   if(openedKind!=="companies"&&openedKind!=="plans"){
-   try{await db.from("audit_events").insert({company_id:company.id,actor_user_id:session.user.id,action:openedKind+".created",resource_type:spec.table,resource_id:inserted.data?.id?String(inserted.data.id):null,outcome:"success",details:{fields:Object.keys(payload).filter(k=>!["company_id","id"].includes(k))}})}catch(_){}
+   try{await db.from("audit_events").insert({company_id:company.id,actor_user_id:session.user.id,action:openedKind+(editingRecord?".updated":".created"),resource_type:spec.table,resource_id:editingRecord?.id?String(editingRecord.id):(write.data?.id?String(write.data.id):null),outcome:"success",details:{fields:Object.keys(payload).filter(k=>!["company_id","id"].includes(k))}})}catch(_){}
   }
-  $("modal-backdrop").classList.remove("open");await render();toast("Cadastro salvo.");
+  const wasEditing=Boolean(editingRecord);editingRecord=null;$("modal-backdrop").classList.remove("open");await render();toast(wasEditing?"Registro atualizado.":"Cadastro salvo.");
  }catch(ex){$("form-error").textContent=ex.message||"Não foi possível salvar."}
  finally{if(button)button.disabled=false}
 }
@@ -483,6 +494,7 @@ function exportRows(key){
 document.addEventListener("click",async e=>{
  const password=e.target.closest("#toggle-password");if(password){const p=$("password"),show=p.type==="password";p.type=show?"text":"password";password.textContent=show?"Ocultar senha":"Exibir senha";password.setAttribute("aria-pressed",String(show));e.preventDefault();e.stopImmediatePropagation();return}
  const nav=e.target.closest("#nav button[data-page]");if(nav){e.preventDefault();e.stopImmediatePropagation();currentPage=nav.dataset.page;window.solaraSearch="";await render();return}
+ const edit=e.target.closest("[data-solara-edit]");if(edit){e.preventDefault();e.stopImmediatePropagation();const row=rowsFor(edit.dataset.solaraEdit).find(x=>String(x.id)===edit.dataset.id);if(row)openForm(edit.dataset.solaraEdit,row);return}
  const create=e.target.closest("[data-solara-new]");if(create){e.preventDefault();e.stopImmediatePropagation();openForm(create.dataset.solaraNew);return}
  const action=e.target.closest("[data-solara-status]");if(action){e.preventDefault();e.stopImmediatePropagation();const kind=action.dataset.solaraStatus,id=action.dataset.id;
   if(kind==="notification"){const u=await db.from("notifications").update({read_at:new Date().toISOString()}).eq("id",id).eq("company_id",company.id);if(u.error)toast("Falha: "+u.error.message);else{await render();toast("Notificação marcada como lida.")}return}
