@@ -12,14 +12,52 @@
 .app{min-height:100vh;display:grid;grid-template-columns:245px 1fr}.sidebar{background:var(--nav);color:#eaf0fa;padding:22px 15px;display:flex;flex-direction:column;gap:22px}.tenant{padding:13px;border:1px solid #ffffff25;border-radius:12px;color:#dbe5f4;overflow-wrap:anywhere}.tenant small{display:block;color:#9db0c9;font-size:10px;letter-spacing:1px;margin-bottom:5px}.nav-label{font-size:10px;color:#8195b1;letter-spacing:1.4px;padding:0 10px;margin-bottom:6px}.nav{display:grid;gap:5px}.nav button{border:0;background:transparent;color:#b9c8dc;text-align:left;padding:11px 12px;border-radius:9px}.nav button.active,.nav button:hover{background:#ffffff16;color:#fff}.sidefoot{margin-top:auto;color:#93a6bf;font-size:12px;padding:8px}.main{min-width:0}.topbar{height:70px;background:#fff;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 28px;gap:12px}.who{display:flex;align-items:center;gap:12px}.content{padding:26px 28px;max-width:1450px;margin:auto}.head{display:flex;align-items:flex-start;justify-content:space-between;gap:15px;margin-bottom:20px}.eyebrow{font-size:11px;color:var(--green);letter-spacing:1.3px;text-transform:uppercase;font-weight:800}.h1{font-size:27px;letter-spacing:-.7px;margin:4px 0}.cards{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;margin-bottom:16px}.card,.panel{background:var(--panel);border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow)}.metric{padding:17px}.metric-label{color:var(--muted);font-size:12px}.metric-value{font-size:26px;font-weight:850;margin:12px 0 3px;letter-spacing:-.5px}.panel{padding:19px;margin-bottom:16px}.panel h2{font-size:15px;margin:0 0 12px}.toolbar{display:flex;gap:9px;align-items:center;flex-wrap:wrap;margin-bottom:14px}.field{border:1px solid var(--line);border-radius:9px;padding:10px 12px;background:white;color:var(--ink);min-width:170px}.table-wrap{overflow:auto}table{width:100%;border-collapse:collapse;white-space:nowrap}th{text-align:left;color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:.5px;padding:12px;border-bottom:1px solid var(--line)}td{padding:12px;border-bottom:1px solid #edf1f6}.pill{display:inline-block;padding:4px 8px;border-radius:20px;background:var(--greenbg);color:var(--green);font-size:11px;font-weight:750}.empty{padding:28px;text-align:center;color:var(--muted)}.note{padding:12px 14px;background:#f0f7e7;border:1px solid #deedc9;border-radius:10px;color:#35571d;font-size:12px;margin-bottom:16px}.modal-backdrop{position:fixed;inset:0;background:#10243c88;display:none;align-items:center;justify-content:center;padding:18px;z-index:5}.modal-backdrop.open{display:flex}.modal{width:min(620px,100%);background:#fff;border-radius:16px;padding:24px;max-height:90vh;overflow:auto}.modal-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}.modal-head h2{margin:0}.close{border:0;border-radius:8px;background:#f1f4f8;width:34px;height:34px}.toast{position:fixed;bottom:20px;right:20px;background:#173e31;color:#fff;padding:13px 17px;border-radius:10px;display:none;z-index:10}.toast.show{display:block}.mobile-menu{display:none}
 @media(max-width:950px){.app{grid-template-columns:205px 1fr}.cards{grid-template-columns:repeat(2,minmax(0,1fr))}.content{padding:20px 16px}.topbar{padding:0 16px}}
 @media(max-width:680px){.app{display:block}.sidebar{display:none}.sidebar.open{display:flex;position:fixed;z-index:8;inset:0 auto 0 0;width:260px}.content{padding:18px 12px}.topbar{height:60px;padding:0 12px}.mobile-menu{display:inline-block}.cards{gap:8px}.metric{padding:12px}.metric-value{font-size:22px}.h1{font-size:23px}.head{align-items:center}.field{flex:1;min-width:130px}}
+
+.sidebar{height:100vh;position:sticky;top:0;overflow-y:auto;overscroll-behavior:contain}
+.nav{gap:3px}.nav button{font-size:12px;padding:9px 10px}
+.kpi-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin:16px 0}
+.kpi{background:#fff;border:1px solid var(--line);border-radius:14px;padding:17px;min-width:0}
+.kpi .metric-label{font-size:12px;color:var(--muted)}.kpi .metric-value{font-size:25px;font-weight:850;letter-spacing:-.8px;margin-top:5px;overflow-wrap:anywhere}
+.grid-two{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.bars{height:180px;display:flex;align-items:flex-end;gap:8px;padding:18px 6px 0;border-bottom:1px solid var(--line)}
+.bar-col{flex:1;min-width:0;text-align:center;font-size:10px;color:var(--muted)}
+.bar{width:100%;min-height:2px;background:linear-gradient(180deg,#c7f36b,#16865b);border-radius:6px 6px 0 0;margin-bottom:7px}
+.tag-row{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}.tag{font-size:11px;border:1px solid var(--line);background:#f7f9fc;border-radius:20px;padding:5px 9px;color:var(--muted)}
+.inline-actions{display:flex;gap:8px;flex-wrap:wrap}.success-note{padding:12px 14px;border-radius:10px;border:1px solid #cce9d8;background:#f0faf4;color:#245b3b;margin-bottom:12px}
+.warning-note{padding:12px 14px;border-radius:10px;border:1px solid #eadab0;background:#fff9e9;color:#775a13;margin-bottom:12px}
+.small{font-size:12px}.wrap{overflow-wrap:anywhere}.subhead{margin:20px 0 10px;font-size:15px}
+@media(max-width:950px){.kpi-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.grid-two{grid-template-columns:1fr}}
+@media(max-width:680px){.sidebar{height:auto;overflow:visible}.kpi-grid{gap:8px}.kpi{padding:12px}.kpi .metric-value{font-size:20px}.nav button{font-size:13px;padding:10px}}
+
 </style>
 </head>
 <body>
-<section id="login-view" class="login"><div class="login-card"><div class="brand" style="color:#172b4d"><div class="logo">☀</div>solara <span style="font-size:10px;color:#16865b;align-self:flex-start">ENERGIA</span></div><h1>Acesse sua plataforma</h1><p class="muted">Entre com seu e-mail e senha cadastrados na Solara.</p><form id="login-form" class="form"><label>E-mail<input id="email" type="email" autocomplete="username" required></label><label>Senha<input id="password" type="password" autocomplete="current-password" required placeholder="Sua senha"></label><button class="btn primary" type="submit">Entrar</button><button class="btn" type="button" id="forgot">Esqueci minha senha</button><div id="login-error" class="error" role="alert"></div></form><p class="muted" style="font-size:12px;margin-top:18px">Acesso protegido por autenticação.</p></div></section>
+<section id="login-view" class="login"><div class="login-card"><div class="brand" style="color:#172b4d"><div class="logo">☀</div>solara <span style="font-size:10px;color:#16865b;align-self:flex-start">ENERGIA</span></div><h1>Acesse sua plataforma</h1><p class="muted">Entre com seu e-mail e senha cadastrados na Solara.</p><form id="login-form" class="form"><label>E-mail<input id="email" type="email" autocomplete="username" required></label><label>Senha<input id="password" type="password" autocomplete="current-password" required placeholder="Sua senha"><button class="btn" type="button" id="toggle-password" aria-pressed="false">Exibir senha</button></label><button class="btn primary" type="submit">Entrar</button><button class="btn" type="button" id="forgot">Esqueci minha senha</button><div id="login-error" class="error" role="alert"></div></form><p class="muted" style="font-size:12px;margin-top:18px">Acesso protegido por autenticação.</p></div></section>
 <div id="app-view" class="app hidden">
 <aside class="sidebar" id="sidebar"><div class="brand"><div class="logo">☀</div>solara</div><div class="tenant"><small>EMPRESA</small><strong id="company-name">Carregando...</strong><div id="user-role" style="font-size:11px;color:#9db0c9;margin-top:5px"></div></div>
 <div><div class="nav-label">GESTÃO</div><nav id="nav" class="nav">
-<button class="active" data-page="dashboard">▦ &nbsp; Visão geral</button><button data-page="customers">♙ &nbsp; Clientes</button><button data-page="plants">☀ &nbsp; Usinas</button><button data-page="bills">▤ &nbsp; Faturas</button><button data-page="generation">◉ &nbsp; Geração</button><button data-page="tickets">◉ &nbsp; Chamados</button><button data-page="leads">↗ &nbsp; CRM / Leads</button><button data-page="reports">▥ &nbsp; Relatórios</button><button data-page="settings">⚙ &nbsp; Configurações</button>
+<button class="active" data-page="dashboard">▦ &nbsp; Visão geral</button>
+<button data-page="monitoring" data-roles="platform_admin,company_admin,manager,operator,support">◉ &nbsp; Monitoramento</button>
+<button data-page="analysis" data-roles="platform_admin,company_admin,manager,operator,financial">▥ &nbsp; Análise energética</button>
+<button data-page="customers" data-roles="platform_admin,company_admin,manager,operator,commercial,financial,support">♙ &nbsp; Clientes</button>
+<button data-page="plants" data-roles="platform_admin,company_admin,manager,operator,commercial,financial,support">☀ &nbsp; Usinas</button>
+<button data-page="bills" data-roles="platform_admin,company_admin,manager,financial">▤ &nbsp; Faturas e economia</button>
+<button data-page="generation" data-roles="platform_admin,company_admin,manager,operator,financial">◉ &nbsp; Geração</button>
+<button data-page="leads" data-roles="platform_admin,company_admin,manager,commercial">↗ &nbsp; CRM / Leads</button>
+<button data-page="tasks" data-roles="platform_admin,company_admin,manager,commercial">✓ &nbsp; Tarefas comerciais</button>
+<button data-page="proposals" data-roles="platform_admin,company_admin,manager,commercial,financial">▧ &nbsp; Propostas</button>
+<button data-page="contracts" data-roles="platform_admin,company_admin,manager,commercial,financial">▤ &nbsp; Contratos</button>
+<button data-page="tickets" data-roles="platform_admin,company_admin,manager,operator,support,customer">◉ &nbsp; Chamados</button>
+<button data-page="maintenance" data-roles="platform_admin,company_admin,manager,operator,support">⚒ &nbsp; Manutenção</button>
+<button data-page="notifications" data-roles="platform_admin,company_admin,manager,operator,commercial,financial,support,customer">♢ &nbsp; Notificações</button>
+<button data-page="reports" data-roles="platform_admin,company_admin,manager,operator,commercial,financial,support">▥ &nbsp; Relatórios</button>
+<button data-page="users" data-roles="platform_admin,company_admin,manager">♧ &nbsp; Usuários e acessos</button>
+<button data-page="integrations" data-roles="platform_admin,company_admin,manager">⌘ &nbsp; Integrações</button>
+<button data-page="organization" data-roles="platform_admin,company_admin,manager">⚙ &nbsp; Organização</button>
+<button data-page="subscription" data-roles="platform_admin,company_admin,manager">◇ &nbsp; Plano e assinatura</button>
+<button data-page="platform" data-roles="platform_admin">▦ &nbsp; Administração Solara</button>
+<button data-page="audit" data-roles="platform_admin,company_admin,manager">◷ &nbsp; Auditoria e segurança</button>
+<button data-page="portal" data-roles="customer">☀ &nbsp; Portal do cliente</button>
 </nav></div><div class="sidefoot">© 2026 Solara Energia<br>Gestão inteligente de energia</div></aside>
 <main class="main"><header class="topbar"><div><button class="btn mobile-menu" id="mobile-menu">☰</button> <small id="breadcrumb">Workspace / Visão geral</small></div><div class="who"><span id="user-email" class="muted"></span><button class="btn" id="logout">Sair</button></div></header><div id="content" class="content"><div class="panel">Carregando seus dados...</div></div></main></div>
 <div id="modal-backdrop" class="modal-backdrop"><div class="modal"><div class="modal-head"><h2 id="modal-title">Novo cadastro</h2><button class="close" id="modal-close">✕</button></div><form id="record-form" class="form"><div id="form-fields" class="form"></div><div id="form-error" class="error"></div><div style="display:flex;justify-content:flex-end;gap:8px"><button class="btn" id="modal-cancel" type="button">Cancelar</button><button class="btn primary" type="submit">Salvar</button></div></form></div></div><div id="toast" class="toast"></div>
@@ -159,6 +197,291 @@ $('record-form').addEventListener('submit',async e=>{
 });
 supabase.auth.onAuthStateChange((_event,session)=>{if(!session){user=null;profile=null;company=null;setLoggedIn(false)}});
 boot();
+</script>
+<script type="module">
+import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
+const db=createClient("https://dbfxmjxigrjybxappxlj.supabase.co","sb_publishable_TS8637sLvINvMxNJyOFqcw__sZTSNMn",{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}});
+const $=id=>document.getElementById(id);
+const esc=v=>String(v==null?"":v).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const n=v=>Number(v||0).toLocaleString("pt-BR",{maximumFractionDigits:2});
+const brl=v=>Number(v||0).toLocaleString("pt-BR",{style:"currency",currency:"BRL"});
+const dt=v=>v?new Date(v).toLocaleDateString("pt-BR"):"—";
+const iso=()=>{const d=new Date();return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0")};
+let session=null,profile=null,company=null,currentPage="dashboard",lastLoaded={};
+const labels={dashboard:"Visão geral",monitoring:"Monitoramento",analysis:"Análise energética",customers:"Clientes",plants:"Usinas",bills:"Faturas e economia",generation:"Geração",leads:"CRM / Leads",tasks:"Tarefas comerciais",proposals:"Propostas",contracts:"Contratos",tickets:"Chamados",maintenance:"Manutenção",notifications:"Notificações",reports:"Relatórios",users:"Usuários e acessos",integrations:"Integrações",organization:"Organização",subscription:"Plano e assinatura",platform:"Administração Solara",audit:"Auditoria e segurança",portal:"Portal do cliente"};
+const specs={
+ customers:{table:"customers",title:"Clientes",desc:"Cadastro central, contatos, documentos e relacionamento.",fields:[["name","Nome / razão social","text",true],["tax_id","CPF/CNPJ","text",false],["email","E-mail","email",false],["phone","Telefone","tel",false],["street_address","Endereço","text",false],["city","Cidade","text",false],["state","Estado","text",false],["utility_name","Concessionária","text",false]]},
+ plants:{table:"solar_plants",title:"Usinas",desc:"Instalações, capacidade, metas e comunicação.",fields:[["name","Nome da usina","text",true],["customer_id","Cliente","customer",true],["address","Endereço","text",false],["latitude","Latitude","number",false],["longitude","Longitude","number",false],["installed_capacity_kwp","Potência (kWp)","number",false],["expected_daily_kwh","Meta diária (kWh)","number",false],["monthly_generation_goal_kwh","Meta mensal (kWh)","number",false],["inverter_brand","Fabricante do inversor","text",false],["inverter_model","Modelo do inversor","text",false]]},
+ bills:{table:"energy_bills",title:"Faturas e economia",desc:"Consumo, vencimentos, pagamento e estimativas registradas.",fields:[["customer_id","Cliente","customer",true],["solar_plant_id","Usina","plant",false],["bill_reference","Referência","text",true],["utility_name","Concessionária","text",true],["billing_period_start","Início do consumo","date",false],["billing_period_end","Fim do consumo","date",false],["consumption_kwh","Consumo (kWh)","number",false],["amount_without_solar","Valor de referência (R$)","number",false],["amount_paid","Valor pago (R$)","number",false],["estimated_savings","Economia estimada (R$)","number",false],["tariff_per_kwh","Tarifa (R$/kWh)","number",false],["due_date","Vencimento","date",false],["paid_at","Pagamento","date",false]]},
+ leads:{table:"leads",title:"CRM e Leads",desc:"Funil comercial e valor potencial.",fields:[["name","Nome / empresa","text",true],["email","E-mail","email",false],["phone","Telefone","tel",false],["source","Origem","text",false],["estimated_capacity_kwp","Potência potencial (kWp)","number",false],["estimated_monthly_value","Valor mensal potencial (R$)","number",false],["notes","Observações","textarea",false]]},
+ tasks:{table:"crm_tasks",title:"Tarefas comerciais",desc:"Retornos, ligações, reuniões e prazos.",fields:[["title","Tarefa","text",true],["description","Descrição","textarea",false],["task_type","Tipo: call, email, meeting, follow_up","text",true],["priority","Prioridade: low, normal, high, urgent","text",true],["due_at","Prazo","datetime-local",false],["lead_id","Lead","lead",false],["customer_id","Cliente","customer",false]]},
+ proposals:{table:"proposals",title:"Propostas",desc:"Escopo, valor, validade e situação.",fields:[["title","Título","text",true],["customer_id","Cliente","customer",false],["lead_id","Lead","lead",false],["proposal_number","Número da proposta","text",false],["scope","Escopo","textarea",false],["amount","Valor (R$)","number",true],["payment_terms","Condição de pagamento","text",false],["valid_until","Validade","date",false]]},
+ contracts:{table:"contracts",title:"Contratos",desc:"Vigência, valor, cliente e documentos.",fields:[["title","Título","text",true],["customer_id","Cliente","customer",false],["solar_plant_id","Usina","plant",false],["contract_number","Número","text",false],["contract_type","Tipo","text",false],["amount","Valor contratado (R$)","number",true],["start_date","Início","date",false],["end_date","Término","date",false],["renewal_index","Índice de reajuste","text",false]]},
+ maintenance:{table:"maintenance_work_orders",title:"Ordens de manutenção",desc:"Preventivas, corretivas, responsáveis e prazos.",fields:[["title","Atividade","text",true],["solar_plant_id","Usina","plant",true],["maintenance_type","Tipo (preventive/corrective/inspection)","text",true],["priority","Prioridade (low/normal/high/critical)","text",true],["scheduled_at","Agendamento","datetime-local",false],["description","Descrição","textarea",false],["diagnosis","Diagnóstico","textarea",false],["assigned_to","ID do responsável","text",false]]},
+ integrations:{table:"inverter_integrations",title:"Integrações",desc:"Cadastro de provedores e estado de sincronização. Credenciais não são exibidas nem armazenadas no navegador.",fields:[["provider","Fabricante / provedor","text",true],["display_name","Nome da conexão","text",true],["external_account_ref","Referência externa","text",false],["auth_mode","Modo de autenticação","text",true],["polling_interval_minutes","Intervalo planejado (min)","number",true]]},
+ invite:{table:null,title:"Convidar usuário",desc:"Um convite é enviado pelo servidor; nenhum segredo administrativo fica no navegador.",fields:[["email","E-mail","email",true],["full_name","Nome completo","text",true],["role","Perfil (company_admin/manager/operator/commercial/financial/support/customer)","text",true],["customer_id","ID do cliente, obrigatório para perfil customer","text",false],["company_id","ID da empresa (somente admin Solara)","text",false]]},
+ companies:{table:"companies",title:"Empresas assinantes",desc:"Cadastro de organizações e situação do ambiente.",fields:[["name","Nome da empresa","text",true],["slug","Identificador (slug)","text",true],["status","Status (trial/active/suspended)","text",true]]},
+ plans:{table:"saas_plans",title:"Planos",desc:"Defina preços e limites antes de comercializar.",fields:[["code","Código","text",true],["name","Nome","text",true],["description","Descrição","textarea",false],["price_monthly","Preço mensal (R$)","number",true],["price_yearly","Preço anual (R$)","number",true],["max_users","Limite de usuários","number",false],["max_customers","Limite de clientes","number",false],["max_plants","Limite de usinas","number",false],["max_integrations","Limite de integrações","number",false],["history_days","Histórico (dias)","number",false],["api_requests_per_day","Requisições API/dia","number",false]]}
+};
+function toast(s){const t=$("toast");if(t){t.textContent=s;t.classList.add("show");setTimeout(()=>t.classList.remove("show"),3200)}}
+function head(kicker,title,desc,action){return '<div class="head"><div><div class="eyebrow">'+esc(kicker)+'</div><h1 class="h1">'+esc(title)+'</h1><p class="muted">'+esc(desc)+'</p></div>'+(action?'<button class="btn lime" data-solara-new="'+esc(action)+'">＋ Novo</button>':'')+'</div>'}
+function moneyMetric(label,value,detail){return '<div class="kpi"><div class="metric-label">'+esc(label)+'</div><div class="metric-value">'+esc(value)+'</div><div class="muted small">'+esc(detail||"")+'</div></div>'}
+async function q(table,order){let x=db.from(table).select("*").eq("company_id",company.id).limit(500);if(order)x=x.order(order,{ascending:false});const r=await x;if(r.error)throw r.error;return r.data||[]}
+async function optional(table,order){try{return await q(table,order)}catch(e){console.warn("Sem acesso a "+table+":",e.message);return []}}
+async function companyData(){
+ const jobs=[
+ ["customers","customers","created_at"],["plants","solar_plants","created_at"],["bills","energy_bills","created_at"],["generation","generation_records","period_start"],["tickets","support_tickets","created_at"],["leads","leads","created_at"],
+ ["devices","inverter_devices","last_seen_at"],["telemetry","inverter_telemetry","observed_at"],["alerts","plant_alerts","detected_at"],["integrations","inverter_integrations","updated_at"],["syncLogs","integration_sync_logs","started_at"],
+ ["tasks","crm_tasks","due_at"],["proposals","proposals","created_at"],["contracts","contracts","created_at"],["maintenance","maintenance_work_orders","created_at"],["notifications","notifications","created_at"],
+ ["profiles","profiles","created_at"],["settings","organization_settings","updated_at"],["subscriptions","saas_subscriptions","created_at"],["audit","audit_events","created_at"]
+ ];
+ const next={};await Promise.all(jobs.map(async a=>{next[a[0]]=await optional(a[1],a[2])}));
+ try{let p=db.from("saas_plans").select("*").limit(100);if(profile.role!=="platform_admin")p=p.eq("is_active",true);const r=await p.order("created_at",{ascending:false});next.plans=r.error?[]:(r.data||[])}catch(_){next.plans=[]}
+ if(profile.role==="platform_admin"){
+  const c=await db.from("companies").select("*").order("created_at",{ascending:false}).limit(500);next.companies=c.error?[company]:(c.data||[]);
+  const ss=await db.from("saas_subscriptions").select("*").order("created_at",{ascending:false}).limit(500);if(!ss.error)next.subscriptions=ss.data||[];
+  const aa=await db.from("audit_events").select("*").order("created_at",{ascending:false}).limit(200);if(!aa.error)next.audit=aa.data||[];
+ }else next.companies=[company];
+ lastLoaded=next;
+}
+function rowsFor(key){return lastLoaded[key]||[]}
+function plantName(id){return rowsFor("plants").find(x=>x.id===id)?.name||"—"}
+function customerName(id){return rowsFor("customers").find(x=>x.id===id)?.name||"—"}
+function pills(value){const m={active:"Ativo",inactive:"Inativo",trial:"Em teste",suspended:"Suspensa",pending:"Pendente",paid:"Paga",overdue:"Vencida",open:"Aberto",in_progress:"Em atendimento",waiting_customer:"Aguardando cliente",resolved:"Resolvido",closed:"Fechado",draft:"Rascunho",sent:"Enviada",accepted:"Aceita",rejected:"Recusada",new:"Novo",contacted:"Contato",qualified:"Qualificado",proposal:"Proposta",negotiation:"Negociação",won:"Ganho",lost:"Perdido",preventive:"Preventiva",corrective:"Corretiva",critical:"Crítica",high:"Alta",normal:"Normal",low:"Baixa",operator:"Operador técnico",customer:"Cliente final",company_admin:"Administrador da empresa",platform_admin:"Administrador Solara",manager:"Gestor",commercial:"Comercial",financial:"Financeiro",support:"Atendimento",success:"Sucesso",error:"Erro",past_due:"Em atraso",canceled:"Cancelada",acknowledged:"Reconhecido"};return '<span class="pill">'+esc(m[value]||value||"—")+'</span>'}
+const colMap={
+ customers:[["Cliente",r=>r.name],["CPF/CNPJ",r=>r.tax_id],["E-mail",r=>r.email],["Telefone",r=>r.phone],["Cidade",r=>[r.city,r.state].filter(Boolean).join("/")],["Concessionária",r=>r.utility_name],["Status",r=>r.status,"pill"]],
+ plants:[["Usina",r=>r.name],["Cliente",r=>customerName(r.customer_id)],["Potência",r=>r.installed_capacity_kwp?n(r.installed_capacity_kwp)+" kWp":"—"],["Inversor",r=>r.inverter_brand],["Última comunicação",r=>dt(r.last_seen_at)],["Status",r=>r.status,"pill"]],
+ bills:[["Cliente",r=>customerName(r.customer_id)],["Referência",r=>r.bill_reference],["Competência",r=>dt(r.billing_period_start)],["Consumo",r=>n(r.consumption_kwh)+" kWh"],["Vencimento",r=>dt(r.due_date)],["Valor pago",r=>brl(r.amount_paid)],["Economia cadastrada",r=>brl(r.estimated_savings)],["Status",r=>r.payment_status||((r.paid_at)?"paid":(r.due_date&&r.due_date<iso()?"overdue":"pending")),"pill"]],
+ generation:[["Usina",r=>plantName(r.solar_plant_id)],["Início",r=>dt(r.period_start)],["Fim",r=>dt(r.period_end)],["Geração",r=>n(r.generated_kwh)+" kWh"],["Fonte",r=>r.source]],
+ tickets:[["Protocolo",r=>String(r.id||"").slice(0,8).toUpperCase()],["Assunto",r=>r.subject],["Prioridade",r=>r.priority,"pill"],["Status",r=>r.status,"pill"],["Abertura",r=>dt(r.created_at)],["Ação",r=>r.status,"ticket"]],
+ leads:[["Lead",r=>r.name],["E-mail",r=>r.email],["Telefone",r=>r.phone],["Origem",r=>r.source],["Etapa",r=>r.stage,"pill"],["Valor mensal",r=>brl(r.estimated_monthly_value)]],
+ tasks:[["Tarefa",r=>r.title],["Tipo",r=>r.task_type],["Prazo",r=>dt(r.due_at)],["Status",r=>r.status,"pill"],["Prioridade",r=>r.priority,"pill"]],
+ proposals:[["Proposta",r=>r.title],["Cliente",r=>customerName(r.customer_id)],["Número",r=>r.proposal_number],["Valor",r=>brl(r.amount)],["Validade",r=>dt(r.valid_until)],["Status",r=>r.status,"pill"]],
+ contracts:[["Contrato",r=>r.title],["Cliente",r=>customerName(r.customer_id)],["Número",r=>r.contract_number],["Valor",r=>brl(r.amount)],["Início",r=>dt(r.start_date)],["Término",r=>dt(r.end_date)],["Status",r=>r.status,"pill"]],
+ maintenance:[["Ordem",r=>r.work_order_number||String(r.id).slice(0,8)],["Atividade",r=>r.title],["Usina",r=>plantName(r.solar_plant_id)],["Tipo",r=>r.maintenance_type],["Prioridade",r=>r.priority,"pill"],["Agendada",r=>dt(r.scheduled_at)],["Status",r=>r.status,"pill"],["Ação",r=>r.status,"workorder"]],
+ notifications:[["Prioridade",r=>r.severity,"pill"],["Notificação",r=>r.title],["Descrição",r=>r.message],["Data",r=>dt(r.created_at)],["Leitura",r=>r.read_at?"Lida":"Não lida"],["Ação",r=>r.read_at?"Lida":"Marcar lida","notification"]],
+ users:[["Nome",r=>r.full_name],["ID",r=>String(r.id||"").slice(0,8)],["Perfil",r=>r.role,"pill"],["Cliente vinculado",r=>String(r.customer_id||"").slice(0,8)||"—"],["Cadastro",r=>dt(r.created_at)]],
+ integrations:[["Provedor",r=>r.provider],["Conexão",r=>r.display_name],["Autenticação",r=>r.auth_mode],["Intervalo (min)",r=>r.polling_interval_minutes],["Última tentativa",r=>dt(r.last_attempt_at)],["Último êxito",r=>dt(r.last_success_at)],["Status",r=>r.status,"pill"]],
+ devices:[["Equipamento",r=>r.device_name||r.external_device_id],["Usina",r=>plantName(r.solar_plant_id)],["Modelo",r=>r.model],["Potência nominal",r=>r.rated_power_w?n(r.rated_power_w)+" W":"—"],["Comunicação",r=>dt(r.last_seen_at)],["Estado",r=>r.device_status||"—","pill"]],
+ alerts:[["Severidade",r=>r.severity,"pill"],["Alerta",r=>r.title||r.alert_type],["Descrição",r=>r.description],["Detectado",r=>dt(r.detected_at)],["Status",r=>r.status,"pill"]],
+ syncLogs:[["Início",r=>dt(r.started_at)],["Fim",r=>dt(r.finished_at)],["Resultado",r=>r.status,"pill"],["Dispositivos",r=>n(r.devices_seen)],["Registros",r=>n(r.records_written)],["Erro",r=>r.error_summary||r.error_code]],
+ subscriptions:[["Empresa",r=>rowsFor("companies").find(c=>c.id===r.company_id)?.name||String(r.company_id||"").slice(0,8)],["Plano",r=>rowsFor("plans").find(p=>p.id===r.plan_id)?.name||"Não vinculado"],["Periodicidade",r=>r.billing_period],["Status",r=>r.status,"pill"],["Ciclo",r=>dt(r.current_period_start)+" – "+dt(r.current_period_end)]],
+ plans:[["Plano",r=>r.name],["Código",r=>r.code],["Mensal",r=>brl(r.price_monthly)],["Anual",r=>brl(r.price_yearly)],["Usuários",r=>r.max_users??"—"],["Usinas",r=>r.max_plants??"—"],["Status",r=>r.is_active?"Ativo":"Inativo","pill"]],
+ companies:[["Empresa",r=>r.name],["Slug",r=>r.slug],["Cadastro",r=>dt(r.created_at)],["Status",r=>r.status,"pill"]],
+ audit:[["Data",r=>dt(r.created_at)],["Usuário",r=>String(r.actor_user_id||"").slice(0,8)],["Ação",r=>r.action],["Recurso",r=>r.resource_type],["ID do recurso",r=>r.resource_id],["Resultado",r=>r.outcome,"pill"]]
+};
+function renderTable(key,title,desc,addKind){
+ const rows=rowsFor(key);const cols=colMap[key]||[];const filtered=rows.filter(r=>cols.some(c=>String(c[1](r)??"").toLowerCase().includes(String(window.solaraSearch||"").toLowerCase())));
+ let out=head("GESTÃO",title,desc,addKind)+'<div class="panel"><div class="toolbar"><input class="field" id="solara-search" placeholder="Pesquisar registros..." value="'+esc(window.solaraSearch||"")+'"><span class="muted">'+filtered.length+' registro(s)</span></div><div class="table-wrap"><table><thead><tr>'+cols.map(c=>'<th>'+esc(c[0])+'</th>').join("")+'</tr></thead><tbody>';
+ if(!filtered.length)out+='<tr><td colspan="'+cols.length+'" class="empty">Nenhum registro disponível para este filtro.</td></tr>';
+ filtered.forEach(r=>{out+='<tr>'+cols.map(c=>{let val=c[1](r);if(c[2]==="pill")return '<td>'+pills(val)+'</td>';if(c[2]==="ticket")return '<td><button class="btn" data-solara-status="ticket" data-id="'+esc(r.id)+'" data-status="'+esc(r.status)+'">Avançar status</button></td>';if(c[2]==="workorder")return '<td><button class="btn" data-solara-status="workorder" data-id="'+esc(r.id)+'" data-status="'+esc(r.status)+'">Avançar status</button></td>';if(c[2]==="notification"&&!r.read_at)return '<td><button class="btn" data-solara-status="notification" data-id="'+esc(r.id)+'">Marcar lida</button></td>';return '<td>'+esc(val??"—")+'</td>'}).join("")+'</tr>'});
+ out+='</tbody></table></div></div>';return out;
+}
+function barChart(rows){
+ if(!rows.length)return '<p class="muted">Sem registros para o período selecionado.</p>';
+ const a=rows.slice().sort((x,y)=>String(x.period_start).localeCompare(String(y.period_start))).slice(-8);const mx=Math.max(1,...a.map(x=>Number(x.generated_kwh||0)));
+ return '<div class="bars">'+a.map(x=>'<div class="bar-col" title="'+esc(dt(x.period_start)+": "+n(x.generated_kwh)+" kWh")+'"><div class="bar" style="height:'+Math.max(2,Math.round(Number(x.generated_kwh||0)/mx*135))+'px"></div>'+esc(dt(x.period_start))+'</div>').join("")+'</div>';
+}
+async function dashboardPage(){
+ const customers=rowsFor("customers"),plants=rowsFor("plants"),bills=rowsFor("bills"),gen=rowsFor("generation"),tickets=rowsFor("tickets"),leads=rowsFor("leads"),alerts=rowsFor("alerts"),devices=rowsFor("devices"),tasks=rowsFor("tasks");
+ const today=iso(),m=today.slice(0,7),y=today.slice(0,4);
+ const sum=(a,k)=>a.reduce((s,r)=>s+Number(r[k]||0),0);
+ const activeCustomers=customers.filter(x=>x.status==="active").length,activePlants=plants.filter(x=>x.status==="active").length;
+ const kToday=sum(gen.filter(x=>x.period_start===today&&x.period_end===today),"generated_kwh");
+ const kMonth=sum(gen.filter(x=>String(x.period_start||"").startsWith(m)),"generated_kwh");
+ const kYear=sum(gen.filter(x=>String(x.period_start||"").startsWith(y)),"generated_kwh");
+ const overdue=bills.filter(x=>!x.paid_at&&x.due_date&&x.due_date<today).length;
+ let out=head("GESTÃO EXECUTIVA","Visão geral","Indicadores reais do ambiente "+company.name+".");
+ out+='<div class="kpi-grid">'+
+ moneyMetric("Clientes ativos",n(activeCustomers),"Cadastros com status ativo")+
+ moneyMetric("Usinas ativas",n(activePlants),"Instalações cadastradas")+
+ moneyMetric("Potência instalada",n(sum(plants.filter(x=>x.status==="active"),"installed_capacity_kwp"))+" kWp","Usinas ativas")+
+ moneyMetric("Geração hoje",n(kToday)+" kWh","Somente registros diários exatos")+
+ moneyMetric("Geração no mês",n(kMonth)+" kWh","Por data inicial do registro")+
+ moneyMetric("Geração no ano",n(kYear)+" kWh","Por data inicial do registro")+
+ moneyMetric("Faturas vencidas",n(overdue),"Sem pagamento e vencimento passado")+
+ moneyMetric("Alertas ativos",n(alerts.filter(x=>x.status!=="resolved").length),"Eventos armazenados")+'</div>';
+ out+='<div class="grid-two"><div class="panel"><h2>Geração registrada</h2><p class="muted small">Histórico real; sem estimativas fabricadas.</p>'+barChart(gen)+'</div><div class="panel"><h2>Resumo operacional</h2><div class="kpi-grid">'+moneyMetric("Chamados em aberto",n(tickets.filter(x=>!["resolved","closed"].includes(x.status)).length),"Chamados não finalizados")+moneyMetric("Leads no funil",n(leads.filter(x=>!["won","lost"].includes(x.stage)).length),"Oportunidades abertas")+moneyMetric("Equipamentos",n(devices.length),"Dispositivos cadastrados")+moneyMetric("Tarefas em aberto",n(tasks.filter(x=>!["done","canceled"].includes(x.status)).length),"Atividades comerciais")+'</div></div></div>';
+ const openAlerts=alerts.filter(a=>a.status!=="resolved").slice(0,5);
+ out+='<div class="panel"><h2>Alertas técnicos</h2><p class="muted small">Só aparecem eventos armazenados pela plataforma ou por uma integração.</p>'+(openAlerts.length?openAlerts.map(a=>'<div class="tag-row"><span class="tag">'+esc(a.severity)+'</span><strong>'+esc(a.title||a.alert_type)+'</strong><span class="muted small">'+dt(a.detected_at)+'</span><span class="muted small">'+esc(a.description||"")+'</span></div>').join(""):'<p class="muted">Nenhum alerta ativo.</p>')+'</div>';
+ out+='<div class="panel"><h2>Qualidade dos dados</h2><p class="muted">Valores dependem dos lançamentos e das APIs habilitadas. A última telemetria armazenada é '+dt(rowsFor("telemetry")[0]?.observed_at)+'. Geração solar não é convertida automaticamente em economia financeira.</p><div class="tag-row"><span class="tag">Geração: '+n(gen.length)+' registros</span><span class="tag">Faturas: '+n(bills.length)+' registros</span><span class="tag">Empresa: '+esc(company.status)+'</span></div></div>';
+ return out;
+}
+async function monitoringPage(){
+ const tele=rowsFor("telemetry"),seen=new Set(),latest=[];tele.forEach(t=>{if(!seen.has(t.device_id)){seen.add(t.device_id);latest.push(t)}});
+ const power=latest.reduce((s,t)=>s+Number(t.pv_power_w||0),0);
+ return head("OPERAÇÃO ENERGÉTICA","Monitoramento","Dados de equipamentos e alertas conforme disponibilidade da fonte.")+
+ '<div class="kpi-grid">'+moneyMetric("Potência instantânea",n(power/1000)+" kW","Soma do último registro de cada dispositivo")+moneyMetric("Dispositivos",n(rowsFor("devices").length),"Equipamentos cadastrados")+moneyMetric("Alertas ativos",n(rowsFor("alerts").filter(a=>a.status!=="resolved").length),"Eventos não resolvidos")+moneyMetric("Último dado recebido",dt(tele[0]?.observed_at),"Data registrada pela integração")+'</div>'+
+ '<div class="panel"><h2>Equipamentos / inversores</h2><p class="muted small">Tensão, corrente, temperatura e falhas só aparecem quando o provedor envia essas medidas.</p>'+renderTable("devices","Equipamentos monitorados","Estado indicado pela fonte de dados.")+'</div>'+
+ '<div class="grid-two"><div class="panel"><h2>Alertas</h2>'+renderTable("alerts","Alertas técnicos","Severidade, descrição e situação.")+'</div><div class="panel"><h2>Sincronizações</h2>'+renderTable("syncLogs","Histórico de integração","Resultados de execuções armazenadas.")+'</div></div>';
+}
+async function analysisPage(){
+ const gen=rowsFor("generation"),bills=rowsFor("bills"),gm={},bm={};
+ gen.forEach(r=>{const k=String(r.period_start||"").slice(0,7);if(k)gm[k]=(gm[k]||0)+Number(r.generated_kwh||0)});
+ bills.forEach(r=>{const k=String(r.billing_period_start||"").slice(0,7);if(k)bm[k]=(bm[k]||0)+Number(r.consumption_kwh||0)});
+ const ms=[...new Set(Object.keys(gm).concat(Object.keys(bm)))].sort().slice(-12);
+ let out=head("INTELIGÊNCIA ENERGÉTICA","Análise de energia","Comparativo por competência informado nos registros.");
+ out+='<div class="note">Geração não equivale automaticamente à economia financeira. A economia segue separada como valor registrado/estimado na fatura.</div><div class="panel"><div class="table-wrap"><table><thead><tr><th>Competência</th><th>Geração (kWh)</th><th>Consumo faturado (kWh)</th><th>Diferença aritmética (kWh)</th><th>Economia cadastrada</th></tr></thead><tbody>';
+ if(!ms.length)out+='<tr><td colspan="5" class="empty">Não há dados suficientes para comparar os períodos.</td></tr>';
+ ms.forEach(m=>{const g=gm[m]||0,b=bm[m]||0,s=bills.filter(x=>String(x.billing_period_start||"").slice(0,7)===m).reduce((a,x)=>a+Number(x.estimated_savings||0),0);out+='<tr><td>'+esc(m)+'</td><td>'+n(g)+'</td><td>'+n(b)+'</td><td>'+n(g-b)+'</td><td>'+brl(s)+'</td></tr>'});
+ return out+'</tbody></table></div></div>'+renderTable("generation","Histórico de geração","Registros por período.")+renderTable("bills","Faturas","Consumo e valores lançados.");
+}
+async function crmPage(){
+ const stages=[["Novo",["new"]],["Contato",["contacted","first_contact"]],["Qualificação",["qualified"]],["Diagnóstico",["meeting","diagnosis"]],["Proposta",["proposal"]],["Negociação",["negotiation"]],["Ganho",["won"]],["Perdido",["lost"]]],leads=rowsFor("leads");
+ let out=head("GESTÃO COMERCIAL","CRM e funil","Oportunidades e retornos comerciais.","leads")+'<div class="kpi-grid">'+moneyMetric("Em andamento",n(leads.filter(l=>!["won","lost"].includes(l.stage)).length),"Leads ativos")+moneyMetric("Valor potencial mensal",brl(leads.filter(l=>!["won","lost"].includes(l.stage)).reduce((s,l)=>s+Number(l.estimated_monthly_value||0),0)),"Estimativa cadastrada")+moneyMetric("Ganhos",n(leads.filter(l=>l.stage==="won").length),"Oportunidades marcadas como ganhas")+moneyMetric("Perdidos",n(leads.filter(l=>l.stage==="lost").length),"Oportunidades marcadas como perdidas")+'</div><div class="grid-two">';
+ stages.forEach(st=>{const items=leads.filter(l=>st[1].includes(l.stage));out+='<div class="panel"><h3>'+st[0]+' <span class="tag">'+items.length+'</span></h3>'+(items.length?items.map(l=>'<div class="tag-row"><strong>'+esc(l.name)+'</strong><span class="muted">'+brl(l.estimated_monthly_value)+'</span><div class="small muted">'+esc(l.email||l.phone||"Sem contato")+'</div></div>').join(""):'<p class="muted small">Nenhuma oportunidade nesta etapa.</p>')+'</div>'});
+ return out+'</div>'+renderTable("leads","Lista de oportunidades","Cadastro e funil.","leads")+renderTable("tasks","Tarefas e retornos","Próximas ações comerciais.","tasks");
+}
+async function reportsPage(){
+ return head("INTELIGÊNCIA","Relatórios","Exportações de registros autorizados, em CSV compatível com Excel.")+'<div class="panel"><h2>Exportar</h2><div class="inline-actions">'+["customers","plants","generation","bills","tickets","leads","alerts","maintenance","contracts"].map(k=>'<button class="btn" data-solara-export="'+k+'">'+esc(labels[k]||k)+'</button>').join("")+'</div><p class="muted small">A exportação contém apenas os registros retornados pelo banco para seu perfil e empresa. PDFs e relatórios agendados exigem gerador/serviço específico.</p></div><div class="panel"><h2>Fontes e limitações</h2><p>Geração: lançamentos cadastrados. Economia: valor registrado ou calculado informado na fatura. Indicadores dependem da data e da qualidade da fonte.</p></div>';
+}
+async function orgPage(){
+ const s=rowsFor("settings")[0]||{},gt=s.generation_targets||{};
+ return head("ADMINISTRAÇÃO","Organização","Identidade visual, fuso horário, metas e preferências.")+'<div class="panel"><form id="solara-org-form" class="form">'+field("display_name","Nome exibido","text",true,s.display_name||company.name)+field("logo_url","URL do logotipo","url",false,s.logo_url||"")+field("brand_color","Cor da marca (hex)","text",false,s.brand_color||"#16865b")+field("timezone","Fuso horário","text",true,s.timezone||"America/Sao_Paulo")+field("locale","Idioma","text",true,s.locale||"pt-BR")+field("goal_daily","Meta diária (kWh)","number",false,gt.daily_kwh||"")+field("goal_monthly","Meta mensal (kWh)","number",false,gt.monthly_kwh||"")+'<button class="btn primary" type="submit">Salvar configurações</button><div id="solara-org-error" class="error"></div></form></div><div class="panel"><h2>Segurança</h2><p class="muted">As permissões são verificadas pelo banco. A identidade visual não altera o isolamento de dados. Segredos de provedores não ficam no navegador.</p><div class="tag-row"><span class="tag">Empresa: '+esc(company.name)+'</span><span class="tag">Status: '+esc(company.status)+'</span><span class="tag">Perfil: '+esc(profile.role)+'</span></div></div>';
+}
+function field(name,label,type,required,value){
+ return '<label>'+esc(label)+'<input name="'+esc(name)+'" type="'+esc(type)+'" '+(required?'required':'')+' value="'+esc(value)+'"></label>';
+}
+async function platformPage(){
+ const cs=rowsFor("companies"),ss=rowsFor("subscriptions"),ps=rowsFor("plans");
+ let mrr=0;ss.filter(s=>s.status==="active").forEach(s=>{const p=ps.find(p=>p.id===s.plan_id);if(p)mrr+=s.billing_period==="yearly"?Number(p.price_yearly||0)/12:Number(p.price_monthly||0)});
+ return head("GESTÃO DA PLATAFORMA","Administração Solara","Metadados globais, planos e assinaturas.")+'<div class="kpi-grid">'+moneyMetric("Empresas cadastradas",n(cs.length),"Organizações")+moneyMetric("Ativas",n(cs.filter(c=>c.status==="active").length),"Status ativo")+moneyMetric("Em teste",n(cs.filter(c=>c.status==="trial").length),"Período de avaliação")+moneyMetric("MRR estimado",brl(mrr),"Assinaturas ativas com plano/preço configurado")+'</div><div class="warning-note">MRR é calculado somente a partir dos preços e assinaturas cadastrados. Sem provedor de pagamento, não há confirmação automática de receita recebida.</div>'+renderTable("companies","Empresas assinantes","Status e identificação das empresas.","companies")+renderTable("plans","Planos","Limites e preços configurados.","plans")+renderTable("subscriptions","Assinaturas","Situação registrada; atualizações de pagamento dependem de webhook autenticado.","");
+}
+async function subPage(){
+ const ss=rowsFor("subscriptions"),s=ss[0];
+ return head("CONTA E COBRANÇA","Plano e assinatura","Consulte o plano vinculado ao ambiente.")+'<div class="panel"><h2>Assinatura</h2>'+(s?'<div class="kpi-grid">'+moneyMetric("Status",s.status,"Situação registrada")+moneyMetric("Periodicidade",s.billing_period,"Ciclo contratado")+moneyMetric("Início",dt(s.current_period_start),"Período atual")+moneyMetric("Renovação",dt(s.current_period_end),"Data registrada")+'</div>':'<p class="muted">Não há assinatura registrada para esta empresa. O acesso legado continua controlado pelo status da empresa até configurar o processo comercial.</p>')+'<p class="muted">Checkout, pagamento, prorrateio e cancelamento automático exigem provedor de cobrança e webhooks validados; ainda não há provedor conectado.</p></div>'+renderTable("plans","Planos ativos","Preços cadastrados na plataforma.","");
+}
+async function portalPage(){
+ const cid=profile.customer_id,me=rowsFor("customers").find(c=>c.id===cid),pl=rowsFor("plants").filter(p=>p.customer_id===cid),bs=rowsFor("bills").filter(b=>b.customer_id===cid),gs=rowsFor("generation").filter(g=>pl.some(p=>p.id===g.solar_plant_id));
+ if(!me)return head("PORTAL DO CLIENTE","Minha energia","Acesso ao dados liberados pela empresa.")+'<div class="warning-note">Seu usuário ainda não está vinculado a um cadastro de cliente. Solicite ao administrador o vínculo correto.</div>';
+ return head("PORTAL DO CLIENTE","Minha energia","Informações que a empresa responsável disponibilizou.")+'<div class="kpi-grid">'+moneyMetric("Cliente",me.name,"Cadastro vinculado")+moneyMetric("Usinas",n(pl.length),"Instalações relacionadas")+moneyMetric("Geração registrada",n(gs.reduce((s,r)=>s+Number(r.generated_kwh||0),0))+" kWh","Soma dos lançamentos associados")+moneyMetric("Faturas",n(bs.length),"Documentos cadastrados")+'</div>'+renderTable("plants","Minhas usinas","Unidades associadas ao meu cadastro.")+renderTable("bills","Minhas faturas","Consumo, vencimento e economia cadastrados.")+'<div class="panel"><h2>Atendimento</h2><button class="btn lime" data-solara-new="tickets">＋ Abrir chamado</button>'+renderTable("tickets","Meus chamados","Solicitações que as políticas de acesso permitem consultar.")+'</div>';
+}
+async function render(){
+ if(!profile||!company)return;
+ const allowed={dashboard:["platform_admin","company_admin","manager","operator","commercial","financial","support","customer"],monitoring:["platform_admin","company_admin","manager","operator","support"],analysis:["platform_admin","company_admin","manager","operator","financial"],customers:["platform_admin","company_admin","manager","operator","commercial","financial","support"],plants:["platform_admin","company_admin","manager","operator","commercial","financial","support"],bills:["platform_admin","company_admin","manager","financial"],generation:["platform_admin","company_admin","manager","operator","financial"],leads:["platform_admin","company_admin","manager","commercial"],tasks:["platform_admin","company_admin","manager","commercial"],proposals:["platform_admin","company_admin","manager","commercial","financial"],contracts:["platform_admin","company_admin","manager","commercial","financial"],tickets:["platform_admin","company_admin","manager","operator","support","customer"],maintenance:["platform_admin","company_admin","manager","operator","support"],notifications:["platform_admin","company_admin","manager","operator","commercial","financial","support","customer"],reports:["platform_admin","company_admin","manager","operator","commercial","financial","support"],users:["platform_admin","company_admin","manager"],integrations:["platform_admin","company_admin","manager"],organization:["platform_admin","company_admin","manager"],subscription:["platform_admin","company_admin","manager"],platform:["platform_admin"],audit:["platform_admin","company_admin","manager"],portal:["customer"]};
+ if(!allowed[currentPage]||!allowed[currentPage].includes(profile.role))currentPage="dashboard";
+ document.querySelectorAll("#nav button[data-page]").forEach(b=>{b.classList.toggle("hidden",!allowed[b.dataset.page]||!allowed[b.dataset.page].includes(profile.role));b.classList.toggle("active",b.dataset.page===currentPage)});
+ $("breadcrumb").textContent="Workspace / "+(labels[currentPage]||"Visão geral");
+ $("content").innerHTML='<div class="panel">Carregando dados permitidos...</div>';
+ try{await companyData();
+  let out="";
+  if(currentPage==="dashboard")out=await dashboardPage();
+  else if(currentPage==="monitoring")out=await monitoringPage();
+  else if(currentPage==="analysis")out=await analysisPage();
+  else if(currentPage==="leads")out=await crmPage();
+  else if(currentPage==="reports")out=await reportsPage();
+  else if(currentPage==="organization")out=await orgPage();
+  else if(currentPage==="platform")out=await platformPage();
+  else if(currentPage==="subscription")out=await subPage();
+  else if(currentPage==="portal")out=await portalPage();
+  else {const spec=specs[currentPage];const tableKey=currentPage==="maintenance"?"maintenance":currentPage==="tasks"?"tasks":currentPage==="users"?"users":currentPage==="integrations"?"integrations":currentPage==="audit"?"audit":currentPage;const desc=(spec&&spec.desc)||"Dados disponíveis de acordo com o perfil e as regras do banco.";
+   if(currentPage==="users")out=head("ACESSO","Usuários e acessos","Convites gerados no servidor; permissões separadas por perfil.","invite")+renderTable("profiles","Usuários cadastrados","E-mails não são lidos diretamente da tabela de autenticação.");
+   else if(currentPage==="integrations")out=head("CONEXÕES","Integrações","Cadastro de metadados. Credenciais privadas não devem ir ao navegador.","integrations")+renderTable("integrations","Conexões","Status da integração.")+renderTable("syncLogs","Histórico de sincronização","Execuções e erros armazenados.");
+   else if(currentPage==="audit")out=head("CONTROLES","Auditoria e segurança","Eventos registram ação, usuário, recurso, data e resultado sem senhas ou tokens.")+renderTable("audit","Eventos","Disponível conforme perfil.");
+   else if(currentPage==="notifications")out=renderTable("notifications","Notificações","Alertas destinados ao seu usuário.");
+   else if(currentPage==="maintenance")out=renderTable("maintenance","Ordens de manutenção",desc,"maintenance");
+   else out=renderTable(tableKey,(spec&&spec.title)||labels[currentPage],desc,spec&&spec.table?currentPage:"");
+  }
+  $("content").innerHTML=out;
+ }catch(ex){$("content").innerHTML='<div class="panel"><h2>Não foi possível carregar esta página</h2><p class="error">'+esc(ex.message||"Erro de consulta")+'</p><button class="btn" data-solara-refresh>Recarregar</button></div>'}
+}
+async function loadContext(){
+ const {data:{session:s}}=await db.auth.getSession();session=s;
+ if(!s){profile=null;company=null;return}
+ const pr=await db.from("profiles").select("id,company_id,full_name,role,customer_id").eq("id",s.user.id).maybeSingle();
+ if(pr.error||!pr.data){$("content").innerHTML='<div class="panel"><h2>Perfil não encontrado</h2><p>Peça ao administrador para vincular seu usuário a uma empresa.</p></div>';return}
+ profile=pr.data;
+ const co=await db.from("companies").select("id,name,status").eq("id",profile.company_id).maybeSingle();
+ if(co.error||!co.data){$("content").innerHTML='<div class="panel"><h2>Empresa não encontrada</h2><p>Confira o vínculo deste usuário.</p></div>';return}
+ company=co.data;
+ if(company.status==="suspended"&&profile.role!=="platform_admin"){await db.auth.signOut();$("content").innerHTML='<div class="panel"><h2>Empresa suspensa</h2><p>O acesso está bloqueado.</p></div>';return}
+ $("company-name").textContent=company.name;$("user-role").textContent=profile.role;$("user-email").textContent=s.user.email||"";
+ await render();
+}
+function fieldInput(f){
+ const name=f[0],label=f[1],type=f[2],req=f[3],v=f[4]||"";
+ if(type==="customer"||type==="plant"||type==="lead"){
+  const key=type==="customer"?"customers":type==="plant"?"plants":"leads";const data=rowsFor(key);
+  return '<label>'+esc(label)+'<select name="'+esc(name)+'" '+(req?"required":"")+'><option value="">Selecione...</option>'+data.map(x=>'<option value="'+esc(x.id)+'">'+esc(x.name)+'</option>').join("")+'</select></label>';
+ }
+ if(type==="textarea")return '<label>'+esc(label)+'<textarea name="'+esc(name)+'" '+(req?"required":"")+'></textarea></label>';
+ return field(name,label,type,req,v);
+}
+let openedKind=null;
+function openForm(kind){
+ if(kind==="companies"&&profile.role!=="platform_admin"){toast("Somente o administrador Solara pode cadastrar empresas.");return}
+ if(kind==="plans"&&profile.role!=="platform_admin"){toast("Somente o administrador Solara pode gerenciar planos.");return}
+ if(kind==="invite"&&!["platform_admin","company_admin","manager"].includes(profile.role)){toast("Perfil sem permissão para convidar usuários.");return}
+ if(!specs[kind]){toast("Formulário não configurado.");return}
+ openedKind=kind;const s=specs[kind];$("modal-title").textContent=s.title;$("form-fields").innerHTML=s.fields.map(fieldInput).join("");$("form-error").textContent="";$("modal-backdrop").classList.add("open");
+}
+async function saveForm(e){
+ e.preventDefault();const button=e.submitter;if(button){button.disabled=true}
+ try{
+  const raw=Object.fromEntries(new FormData(e.currentTarget).entries());Object.keys(raw).forEach(k=>{if(raw[k]==="")raw[k]=null});
+  if(openedKind==="invite"){
+   const {data,error}=await db.functions.invoke("invite-company-user",{body:{email:raw.email,full_name:raw.full_name,role:raw.role,customer_id:raw.customer_id||null,company_id:profile.role==="platform_admin"?raw.company_id||null:undefined}});
+   if(error)throw new Error(error.message);if(data&&data.error)throw new Error(data.error);
+   $("modal-backdrop").classList.remove("open");await render();toast((data&&data.message)||"Convite processado.");return;
+  }
+  const spec=specs[openedKind];if(!spec||!spec.table)throw new Error("Tipo de cadastro inválido.");
+  const payload={...raw};
+  const numeric=["installed_capacity_kwp","expected_daily_kwh","monthly_generation_goal_kwh","latitude","longitude","consumption_kwh","amount_without_solar","amount_paid","estimated_savings","estimated_capacity_kwp","estimated_monthly_value","tariff_per_kwh","amount","price_monthly","price_yearly","max_users","max_customers","max_plants","max_integrations","history_days","api_requests_per_day","polling_interval_minutes"];
+  numeric.forEach(k=>{if(payload[k]!==undefined&&payload[k]!==null)payload[k]=Number(payload[k])});
+  if(openedKind!=="companies"&&openedKind!=="plans")payload.company_id=company.id;
+  if(openedKind==="customers")payload.status="active";
+  if(openedKind==="plants"){payload.status="active";payload.inverter_integration="manual";if(payload.latitude===null)delete payload.latitude;if(payload.longitude===null)delete payload.longitude}
+  if(openedKind==="bills"){payload.amount_paid=Number(payload.amount_paid||0);payload.consumption_kwh=Number(payload.consumption_kwh||0);payload.estimated_savings=Number(payload.estimated_savings||0);payload.payment_status=payload.paid_at?"paid":"pending"}
+  if(openedKind==="tickets"){payload.created_by=session.user.id;payload.status="open";payload.priority=payload.priority||"normal"}
+  if(openedKind==="leads")payload.stage="new";
+  if(openedKind==="tasks"){payload.created_by=session.user.id;payload.status="open";if(payload.due_at)payload.due_at=new Date(payload.due_at).toISOString()}
+  if(openedKind==="proposals"){payload.created_by=session.user.id;payload.status="draft"}
+  if(openedKind==="contracts"){payload.created_by=session.user.id;payload.status="draft"}
+  if(openedKind==="maintenance"){payload.opened_by=session.user.id;payload.status="open";if(payload.scheduled_at)payload.scheduled_at=new Date(payload.scheduled_at).toISOString()}
+  if(openedKind==="integrations"){payload.created_by=session.user.id;payload.status="pending";payload.polling_interval_minutes=Number(payload.polling_interval_minutes||60)}
+  if(openedKind==="companies")payload.slug=String(payload.slug||payload.name).toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"");
+  if(openedKind==="plans"){payload.is_active=true;["max_users","max_customers","max_plants","max_integrations","history_days","api_requests_per_day"].forEach(k=>{if(payload[k]===null)delete payload[k]})}
+  const inserted=await db.from(spec.table).insert(payload).select("id").maybeSingle();if(inserted.error)throw inserted.error;
+  if(openedKind!=="companies"&&openedKind!=="plans"){
+   try{await db.from("audit_events").insert({company_id:company.id,actor_user_id:session.user.id,action:openedKind+".created",resource_type:spec.table,resource_id:inserted.data?.id?String(inserted.data.id):null,outcome:"success",details:{fields:Object.keys(payload).filter(k=>!["company_id","id"].includes(k))}})}catch(_){}
+  }
+  $("modal-backdrop").classList.remove("open");await render();toast("Cadastro salvo.");
+ }catch(ex){$("form-error").textContent=ex.message||"Não foi possível salvar."}
+ finally{if(button)button.disabled=false}
+}
+function exportRows(key){
+ const keyMap={maintenance:"maintenance",audit:"audit",subscriptions:"subscriptions",companies:"companies",plans:"plans"};
+ const data=rowsFor(keyMap[key]||key);if(!data.length){toast("Não há registros para exportar.");return}
+ const keys=[...new Set(data.flatMap(o=>Object.keys(o)))];
+ const csv=[keys.join(";"),...data.map(row=>keys.map(k=>'"'+String(row[k]??"").replace(/"/g,'""')+'"').join(";"))].join("\r\n");
+ const a=document.createElement("a");a.href=URL.createObjectURL(new Blob(["\ufeff"+csv],{type:"text/csv;charset=utf-8"}));a.download="solara-"+key+"-"+iso()+".csv";a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000);
+}
+document.addEventListener("click",async e=>{
+ const password=e.target.closest("#toggle-password");if(password){const p=$("password"),show=p.type==="password";p.type=show?"text":"password";password.textContent=show?"Ocultar senha":"Exibir senha";password.setAttribute("aria-pressed",String(show));e.preventDefault();e.stopImmediatePropagation();return}
+ const nav=e.target.closest("#nav button[data-page]");if(nav){e.preventDefault();e.stopImmediatePropagation();currentPage=nav.dataset.page;window.solaraSearch="";await render();return}
+ const create=e.target.closest("[data-solara-new]");if(create){e.preventDefault();e.stopImmediatePropagation();openForm(create.dataset.solaraNew);return}
+ const action=e.target.closest("[data-solara-status]");if(action){e.preventDefault();e.stopImmediatePropagation();const kind=action.dataset.solaraStatus,id=action.dataset.id;
+  if(kind==="notification"){const u=await db.from("notifications").update({read_at:new Date().toISOString()}).eq("id",id).eq("company_id",company.id);if(u.error)toast("Falha: "+u.error.message);else{await render();toast("Notificação marcada como lida.")}return}
+  if(kind==="ticket"){const st=["open","in_progress","waiting_customer","resolved","closed"],next=st[(st.indexOf(action.dataset.status)+1)%st.length];const u=await db.from("support_tickets").update({status:next}).eq("id",id).eq("company_id",company.id);if(u.error)toast("Falha: "+u.error.message);else{await render();toast("Chamado atualizado.")}return}
+  if(kind==="workorder"){const st=["open","scheduled","in_progress","waiting_parts","resolved","closed"],next=st[(st.indexOf(action.dataset.status)+1)%st.length];const u=await db.from("maintenance_work_orders").update({status:next,updated_at:new Date().toISOString(),closed_at:["resolved","closed"].includes(next)?new Date().toISOString():null}).eq("id",id).eq("company_id",company.id);if(u.error)toast("Falha: "+u.error.message);else{await render();toast("Ordem atualizada.")}return}
+ }
+ const ex=e.target.closest("[data-solara-export]");if(ex){e.preventDefault();e.stopImmediatePropagation();exportRows(ex.dataset.solaraExport);return}
+ const ref=e.target.closest("[data-solara-refresh]");if(ref){e.preventDefault();e.stopImmediatePropagation();await loadContext();return}
+},true);
+document.addEventListener("submit",async e=>{
+ if(e.target.id==="record-form"&&openedKind){e.preventDefault();e.stopImmediatePropagation();await saveForm(e);return}
+ if(e.target.id==="solara-org-form"){
+  e.preventDefault();e.stopImmediatePropagation();const f=new FormData(e.target),daily=f.get("goal_daily"),monthly=f.get("goal_monthly"),targets={};
+  if(daily!=="")targets.daily_kwh=Number(daily);if(monthly!=="")targets.monthly_kwh=Number(monthly);
+  const old=rowsFor("settings")[0]||{},payload={company_id:company.id,display_name:f.get("display_name"),logo_url:f.get("logo_url")||null,brand_color:f.get("brand_color")||null,timezone:f.get("timezone"),locale:f.get("locale"),generation_targets:targets,alert_preferences:old.alert_preferences||{},custom_fields:old.custom_fields||{},updated_by:session.user.id,updated_at:new Date().toISOString()};
+  const r=await db.from("organization_settings").upsert(payload,{onConflict:"company_id"});if(r.error){$("solara-org-error").textContent=r.error.message;return}
+  try{await db.from("audit_events").insert({company_id:company.id,actor_user_id:session.user.id,action:"organization.settings_updated",resource_type:"organization_settings",resource_id:company.id,outcome:"success"})}catch(_){}
+  await render();toast("Configurações salvas.");return;
+ }
+},true);
+document.addEventListener("input",e=>{if(e.target.id==="solara-search"){window.solaraSearch=e.target.value;const pos=e.target.selectionStart;render().then(()=>{const n=$("solara-search");if(n){n.focus();n.setSelectionRange(pos,pos)}})}},true);
+db.auth.onAuthStateChange((_event,s)=>{session=s;if(s){setTimeout(()=>loadContext(),0)}else{profile=null;company=null;currentPage="dashboard"}});
+db.auth.getSession().then(({data})=>{session=data.session;if(session)loadContext()});
 </script>
 </body>
 </html>
