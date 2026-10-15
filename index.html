@@ -247,14 +247,14 @@ async function companyData(){
 function rowsFor(key){return lastLoaded[key]||[]}
 function plantName(id){return rowsFor("plants").find(x=>x.id===id)?.name||"—"}
 function customerName(id){return rowsFor("customers").find(x=>x.id===id)?.name||"—"}
-function pills(value){const m={active:"Ativo",inactive:"Inativo",trial:"Em teste",suspended:"Suspensa",pending:"Pendente",paid:"Paga",overdue:"Vencida",open:"Aberto",in_progress:"Em atendimento",waiting_customer:"Aguardando cliente",resolved:"Resolvido",closed:"Fechado",draft:"Rascunho",sent:"Enviada",accepted:"Aceita",rejected:"Recusada",new:"Novo",contacted:"Contato",qualified:"Qualificado",proposal:"Proposta",negotiation:"Negociação",won:"Ganho",lost:"Perdido",preventive:"Preventiva",corrective:"Corretiva",critical:"Crítica",high:"Alta",normal:"Normal",low:"Baixa",operator:"Operador técnico",customer:"Cliente final",company_admin:"Administrador da empresa",platform_admin:"Administrador Solara",manager:"Gestor",commercial:"Comercial",financial:"Financeiro",support:"Atendimento",success:"Sucesso",error:"Erro",past_due:"Em atraso",canceled:"Cancelada",acknowledged:"Reconhecido"};return '<span class="pill">'+esc(m[value]||value||"—")+'</span>'}
+function pills(value){const m={active:"Ativo",inactive:"Inativo",trial:"Em teste",suspended:"Suspensa",pending:"Pendente",paid:"Paga",overdue:"Vencida",open:"Aberto",in_progress:"Em atendimento",waiting_customer:"Aguardando cliente",resolved:"Resolvido",closed:"Fechado",draft:"Rascunho",sent:"Enviada",accepted:"Aceita",rejected:"Recusada",new:"Novo",contacted:"Primeiro contato",first_contact:"Primeiro contato",qualified:"Qualificação",meeting:"Reunião/diagnóstico",diagnosis:"Diagnóstico",proposal:"Proposta enviada",negotiation:"Negociação",won:"Ganho",lost:"Perdido",preventive:"Preventiva",corrective:"Corretiva",critical:"Crítica",high:"Alta",normal:"Normal",low:"Baixa",operator:"Operador técnico",customer:"Cliente final",company_admin:"Administrador da empresa",platform_admin:"Administrador Solara",manager:"Gestor",commercial:"Comercial",financial:"Financeiro",support:"Atendimento",success:"Sucesso",error:"Erro",past_due:"Em atraso",canceled:"Cancelada",acknowledged:"Reconhecido"};return '<span class="pill">'+esc(m[value]||value||"—")+'</span>'}
 const colMap={
  customers:[["Cliente",r=>r.name],["CPF/CNPJ",r=>r.tax_id],["E-mail",r=>r.email],["Telefone",r=>r.phone],["Cidade",r=>[r.city,r.state].filter(Boolean).join("/")],["Concessionária",r=>r.utility_name],["Status",r=>r.status,"pill"]],
  plants:[["Usina",r=>r.name],["Cliente",r=>customerName(r.customer_id)],["Potência",r=>r.installed_capacity_kwp?n(r.installed_capacity_kwp)+" kWp":"—"],["Inversor",r=>r.inverter_brand],["Última comunicação",r=>dt(r.last_seen_at)],["Status",r=>r.status,"pill"]],
  bills:[["Cliente",r=>customerName(r.customer_id)],["Referência",r=>r.bill_reference],["Competência",r=>dt(r.billing_period_start)],["Consumo",r=>n(r.consumption_kwh)+" kWh"],["Vencimento",r=>dt(r.due_date)],["Valor pago",r=>brl(r.amount_paid)],["Economia cadastrada",r=>brl(r.estimated_savings)],["Status",r=>r.paid_at?"paid":(r.due_date&&r.due_date<iso()?"overdue":(r.payment_status||"pending")),"pill"]],
  generation:[["Usina",r=>plantName(r.solar_plant_id)],["Início",r=>dt(r.period_start)],["Fim",r=>dt(r.period_end)],["Geração",r=>n(r.generated_kwh)+" kWh"],["Fonte",r=>r.source]],
  tickets:[["Protocolo",r=>String(r.id||"").slice(0,8).toUpperCase()],["Assunto",r=>r.subject],["Prioridade",r=>r.priority,"pill"],["Status",r=>r.status,"pill"],["Abertura",r=>dt(r.created_at)],["Ação",r=>r.status,"ticket"]],
- leads:[["Lead",r=>r.name],["E-mail",r=>r.email],["Telefone",r=>r.phone],["Origem",r=>r.source],["Etapa",r=>r.stage,"pill"],["Valor mensal",r=>brl(r.estimated_monthly_value)]],
+ leads:[["Lead",r=>r.name],["E-mail",r=>r.email],["Telefone",r=>r.phone],["Origem",r=>r.source],["Etapa",r=>r.stage,"pill"],["Valor mensal",r=>brl(r.estimated_monthly_value)],["Ação",r=>r.stage,"leadstage"]],
  tasks:[["Tarefa",r=>r.title],["Tipo",r=>r.task_type],["Prazo",r=>dt(r.due_at)],["Status",r=>r.status,"pill"],["Prioridade",r=>r.priority,"pill"]],
  proposals:[["Proposta",r=>r.title],["Cliente",r=>customerName(r.customer_id)],["Número",r=>r.proposal_number],["Valor",r=>brl(r.amount)],["Validade",r=>dt(r.valid_until)],["Status",r=>r.status,"pill"]],
  contracts:[["Contrato",r=>r.title],["Cliente",r=>customerName(r.customer_id)],["Número",r=>r.contract_number],["Valor",r=>brl(r.amount)],["Início",r=>dt(r.start_date)],["Término",r=>dt(r.end_date)],["Status",r=>r.status,"pill"]],
@@ -328,7 +328,7 @@ async function analysisPage(){
  return out+'</tbody></table></div></div>'+renderTable("generation","Histórico de geração","Registros por período.")+renderTable("bills","Faturas","Consumo e valores lançados.");
 }
 async function crmPage(){
- const stages=[["Novo",["new"]],["Contato",["contacted","first_contact"]],["Qualificação",["qualified"]],["Diagnóstico",["meeting","diagnosis"]],["Proposta",["proposal"]],["Negociação",["negotiation"]],["Ganho",["won"]],["Perdido",["lost"]]],leads=rowsFor("leads");
+ const stages=[["Novo",["new"]],["Primeiro contato",["contacted","first_contact"]],["Qualificação",["qualified"]],["Reunião / diagnóstico",["meeting","diagnosis"]],["Proposta enviada",["proposal"]],["Negociação",["negotiation"]],["Ganho",["won"]],["Perdido",["lost"]]],leads=rowsFor("leads");
  let out=head("GESTÃO COMERCIAL","CRM e funil","Oportunidades e retornos comerciais.","leads")+'<div class="kpi-grid">'+moneyMetric("Em andamento",n(leads.filter(l=>!["won","lost"].includes(l.stage)).length),"Leads ativos")+moneyMetric("Valor potencial mensal",brl(leads.filter(l=>!["won","lost"].includes(l.stage)).reduce((s,l)=>s+Number(l.estimated_monthly_value||0),0)),"Estimativa cadastrada")+moneyMetric("Ganhos",n(leads.filter(l=>l.stage==="won").length),"Oportunidades marcadas como ganhas")+moneyMetric("Perdidos",n(leads.filter(l=>l.stage==="lost").length),"Oportunidades marcadas como perdidas")+'</div><div class="grid-two">';
  stages.forEach(st=>{const items=leads.filter(l=>st[1].includes(l.stage));out+='<div class="panel"><h3>'+st[0]+' <span class="tag">'+items.length+'</span></h3>'+(items.length?items.map(l=>'<div class="tag-row"><strong>'+esc(l.name)+'</strong><span class="muted">'+brl(l.estimated_monthly_value)+'</span><div class="small muted">'+esc(l.email||l.phone||"Sem contato")+'</div></div>').join(""):'<p class="muted small">Nenhuma oportunidade nesta etapa.</p>')+'</div>'});
  return out+'</div>'+renderTable("leads","Lista de oportunidades","Cadastro e funil.","leads")+renderTable("tasks","Tarefas e retornos","Próximas ações comerciais.","tasks");
@@ -405,6 +405,17 @@ async function loadContext(){
 }
 function fieldInput(f){
  const name=f[0],label=f[1],type=f[2],req=f[3],v=f[4]||"";
+ const options={
+  role:[["company_admin","Administrador da empresa"],["manager","Gestor"],["operator","Operador técnico"],["commercial","Comercial"],["financial","Financeiro"],["support","Atendimento"],["customer","Cliente final"]],
+  task_type:[["call","Ligação"],["email","E-mail"],["meeting","Reunião"],["follow_up","Retorno"],["other","Outro"]],
+  maintenance_type:[["preventive","Preventiva"],["corrective","Corretiva"],["inspection","Inspeção"]],
+  priority:openedKind==="maintenance"?[["low","Baixa"],["normal","Normal"],["high","Alta"],["critical","Crítica"]]:[["low","Baixa"],["normal","Normal"],["high","Alta"],["urgent","Urgente"]],
+  status:openedKind==="companies"?[["trial","Em teste"],["active","Ativa"],["suspended","Suspensa"]]:null
+ };
+ if(options[name]){
+  const textLabels={role:"Perfil de acesso",task_type:"Tipo de tarefa",maintenance_type:"Tipo de manutenção",priority:"Prioridade",status:"Situação da empresa"};
+  return '<label>'+esc(textLabels[name]||label)+'<select name="'+esc(name)+'" '+(req?"required":"")+'>'+options[name].map(o=>'<option value="'+esc(o[0])+'">'+esc(o[1])+'</option>').join("")+'</select></label>';
+ }
  if(name==="customer_id"){
   const data=rowsFor("customers");
   return '<label>'+esc(label)+'<select name="'+esc(name)+'" '+(req?"required":"")+'><option value="">Selecione um cliente...</option>'+data.map(x=>'<option value="'+esc(x.id)+'">'+esc(x.name)+'</option>').join("")+'</select></label>';
