@@ -481,7 +481,7 @@ function openForm(kind,record=null){
 async function saveForm(e){
  e.preventDefault();const button=e.submitter;if(button){button.disabled=true}
  try{
-  const raw=Object.fromEntries(new FormData(e.currentTarget).entries());Object.keys(raw).forEach(k=>{if(raw[k]==="")raw[k]=null});
+  const raw=Object.fromEntries(new FormData(e.target).entries());Object.keys(raw).forEach(k=>{if(raw[k]==="")raw[k]=null});
   if(openedKind==="invite"){
    const {data,error}=await db.functions.invoke("invite-company-user",{body:{email:raw.email,full_name:raw.full_name,role:raw.role,customer_id:raw.customer_id||null,company_id:profile.role==="platform_admin"?raw.company_id||null:undefined}});
    if(error)throw new Error(error.message);if(data&&data.error)throw new Error(data.error);
