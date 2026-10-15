@@ -1,46 +1,60 @@
-# Solara Energia — status de implementação
+# Solara Energia — status da implementação
 
 Atualizado em 15/10/2026.
 
-## Repositório e publicação
+## Repositório e deploy
 
-- Repositório: `matheusalvma-ui/gran-solare`, branch `main`.
-- A interface expandida está em `index.html`.
-- O deploy Vercel mais recente verificado está em estado `READY` e corresponde ao commit `d6d5dfbc018e6e5a95053bb1e90280dced284a46`.
-- Projeto Supabase: `dbfxmjxigrjybxappxlj`.
+- Código: [GitHub — matheusalvma-ui/gran-solare](https://github.com/matheusalvma-ui/gran-solare), branch `main`.
+- Aplicação: [deploy de produção Vercel](https://gran-solare-eum95r5z2-matheusalvma-uis-projects.vercel.app).
+- Deploy verificado: estado `READY`, commit `234fd033a772d22441fd3b0b1977d1a4e2783428`.
+- Backend: Supabase project `dbfxmjxigrjybxappxlj`.
+- A interface usa apenas a chave pública publishable no navegador; segredos administrativos ficam no ambiente da Edge Function.
 
-## Migrações aplicadas ao Supabase
+## Banco de dados e segurança já aplicados
 
-As versões abaixo constam no histórico remoto de migrações:
+As migrações remotas registradas no projeto são:
+
 - `20261014114159_add_inverter_monitoring_foundation`
 - `20261014120200_private_energy_bill_pdf_storage`
 - `20261014140727_create_dashboard_company_metrics_view`
 - `20261015105753_secure_multi_tenant_expand_saas_platform`
-- `tighten_rls_and_index_saas_tables`
-- `index_customer_assignment_fk`
-- `scope_customer_portal_reads_to_tenant`
+- `20261015110537_tighten_rls_and_index_saas_tables`
+- `20261015110615_index_customer_assignment_fk`
+- `20261015110723_scope_customer_portal_reads_to_tenant`
+- `20261015111000_expand_crm_pipeline_stages`
+- `20261015111536_enforce_subscription_access_and_plan_limits`
+- `20261015111839_make_company_access_helper_invoker_safe`
 
-Mudanças desta implementação incluem as tabelas `saas_plans`, `saas_subscriptions`, `organization_settings`, `crm_tasks`, `proposals`, `contracts`, `maintenance_work_orders`, `notifications`, `audit_events`; campos auxiliares de clientes, usinas, faturas e telemetria; políticas RLS por empresa/perfil; índices para consultas e chaves estrangeiras; e a view `dashboard_company_metrics` configurada com `security_invoker=true`. Foi removido acesso `anon` à view.
+Novas estruturas incluem planos/assinaturas, configurações organizacionais, tarefas comerciais, propostas, contratos, ordens de manutenção, notificações e auditoria. Foram adicionados campos para endereço e metas das usinas, créditos/consumo tarifário das faturas e telemetria de inversores quando a fonte fornece esses valores.
 
-A função Edge `invite-company-user` foi publicada com verificação JWT, validação do perfil chamador, vinculação do cliente à empresa e registro de auditoria. O segredo administrativo é lido apenas do ambiente da função.
+A view `dashboard_company_metrics` usa `security_invoker=true`, sem leitura anônima. As políticas RLS restringem os registros por organização e perfil. O acesso do portal do cliente confere o vínculo com a empresa nas consultas de clientes, usinas, geração, faturas e chamados. Foram adicionadas políticas restritivas para bloquear dados operacionais quando a empresa está suspensa ou a assinatura está cancelada/suspensa. Os limites de usuários, clientes, usinas e integrações são aplicados no banco quando a empresa tem um plano vinculado com limites configurados. A verificação atual não encontrou políticas RLS sobrepostas.
 
-## Telas incluídas na interface
+A função Edge `invite-company-user` foi publicada com verificação JWT, checagem de perfil e empresa, validação do cliente antes de convidar perfis de cliente e registro de auditoria. A entrega dos convites e recuperação de senha depende do SMTP e dos redirects configurados no Supabase.
 
-Visão geral, monitoramento, análise energética, clientes, usinas, faturas, geração, CRM/leads, tarefas comerciais, propostas, contratos, chamados, manutenção, notificações, relatórios CSV, usuários/convites, integrações, configurações da organização, assinatura/plano, administração Solara e portal do cliente.
+## Telas e fluxos presentes
 
-## O que já funciona e o que depende de configuração
+- Login com carregamento, mensagens de erro, exibir/ocultar senha, recuperação de acesso e limitação visual temporária após falhas repetidas.
+- Dashboard com indicadores calculados dos registros reais disponíveis.
+- Monitoramento com leitura de telemetria e histórico de sincronização, quando existente.
+- Clientes, usinas, faturas, geração e análise energética.
+- CRM com funil e avanço de etapa; tarefas comerciais.
+- Propostas, contratos e ordens de manutenção.
+- Chamados, notificações e relatórios com exportação CSV.
+- Usuários e convites; configurações da organização.
+- Administração da plataforma para empresas e planos, além de vincular/administrar assinaturas.
+- Portal do cliente com vínculo obrigatório por perfil.
+- Edição de clientes, usinas, faturas, leads, tarefas, propostas, contratos e ordens de manutenção, sujeita a perfil e regras do banco.
 
-A interface lê registros reais do Supabase e não preenche gráficos com números fictícios. Exportações de dados estão disponíveis em CSV. Os valores de geração dependem dos registros de geração e telemetria existentes. Campos que a API do fabricante não fornece permanecem vazios/indisponíveis.
+Os gráficos e totais usam dados do Supabase. A interface não cria valores fictícios para preencher telas. A exportação funcional entregue é CSV compatível com Excel.
 
-Ainda requer trabalho de integração antes de ser considerado SaaS comercial completo:
-- Conectar e homologar APIs reais de fabricantes/inversores, com sincronização no servidor e logs de qualidade.
-- Configurar SMTP/redirects do Supabase e testar convites/recuperação de senha com contas reais.
-- Ligar um provedor de cobrança por webhook autenticado para checkout, pagamento, reembolso, upgrade/downgrade e cancelamento.
-- Gerador de PDF/Excel final, processamento/OCR de faturas, assinatura eletrônica e notificações por e-mail/WhatsApp.
-- Adicionar e testar MFA, política de retenção/backups/recuperação e testes com duas ou mais empresas reais.
-- Habilitar proteção contra senhas comprometidas no painel de Auth do Supabase. O advisor da data acima ainda sinalizava essa opção desativada.
-- Validar todos os fluxos em navegador com usuários de cada perfil e verificar o nível de proteção do domínio público no Vercel.
+## Ainda necessário antes de vender comercialmente
 
-## Antes de colocar clientes comerciais
+1. **Proteção de senhas comprometidas:** o advisor do Supabase ainda reporta essa opção desativada. Habilitar no painel Supabase em Authentication → Settings → Password Security → Leaked Password Protection. Referência: https://supabase.com/docs/guides/auth/password-security#password-strength-and-leaked-password-protection.
+2. **Integrações de inversores:** a base para integrações, dispositivos, telemetria e logs existe, mas falta conectar e homologar as APIs reais dos fabricantes e automatizar a sincronização no servidor. Frequência/medições dependerão de cada provedor.
+3. **Cobrança real:** planos e assinaturas estão modelados e o status pode ser administrado; checkout, cobrança recorrente, pagamentos, reembolsos, prorrateio e cancelamentos automáticos requerem um provedor de pagamento e webhooks autenticados. Não se deve marcar pagamentos como confirmados manualmente.
+4. **Documentos e comunicações:** OCR de PDFs escaneados, extração automatizada revisável, geração final de PDF/Excel, assinatura eletrônica, e-mail/WhatsApp e relatórios agendados dependem de serviços adicionais.
+5. **Endurecimento operacional:** habilitar e testar MFA para administradores, SMTP/redirects, backups/recuperação, retenção/exclusão de dados e monitoramento de erros.
+6. **Homologação funcional:** testar no navegador com contas reais de todos os perfis e ao menos duas empresas diferentes, incluindo tentativas explícitas de leitura cruzada. Os testes realizados nesta etapa foram estáticos/estruturais e de configuração; não substituem uma bateria completa de testes end-to-end com dados reais.
+7. **Planos legados:** empresas sem assinatura vinculada continuam com o comportamento legado. Para aplicar limites contratados, vincule um plano e configure os limites correspondentes.
 
-Não marque uma assinatura como paga sem confirmação do processador de pagamentos. Não guarde credenciais de fabricante no HTML. Faça teste de separação entre pelo menos duas empresas e um portal de cliente antes de expor dados reais. A saída `READY` do Vercel indica que o deploy terminou, mas não substitui teste funcional da aplicação em navegador.
+O estado `READY` do Vercel confirma que o deploy terminou; não garante por si só que todos os fluxos comerciais externos estão integrados ou homologados.
