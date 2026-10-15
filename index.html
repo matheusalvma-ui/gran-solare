@@ -242,7 +242,8 @@ const specs={
  integrations:{table:"inverter_integrations",title:"Integrações",desc:"Cadastro de provedores e estado de sincronização. Credenciais não são exibidas nem armazenadas no navegador.",fields:[["provider","Fabricante / provedor","text",true],["display_name","Nome da conexão","text",true],["external_account_ref","Referência externa","text",false],["auth_mode","Modo de autenticação","text",true],["polling_interval_minutes","Intervalo planejado (min)","number",true]]},
  invite:{table:null,title:"Convidar usuário",desc:"Um convite é enviado pelo servidor; nenhum segredo administrativo fica no navegador.",fields:[["email","E-mail","email",true],["full_name","Nome completo","text",true],["role","Perfil (company_admin/manager/operator/commercial/financial/support/customer)","text",true],["customer_id","ID do cliente, obrigatório para perfil customer","text",false],["company_id","ID da empresa (somente admin Solara)","text",false]]},
  companies:{table:"companies",title:"Empresas assinantes",desc:"Cadastro de organizações e situação do ambiente.",fields:[["name","Nome da empresa","text",true],["slug","Identificador (slug)","text",true],["status","Status (trial/active/suspended)","text",true]]},
- plans:{table:"saas_plans",title:"Planos",desc:"Defina preços e limites antes de comercializar.",fields:[["code","Código","text",true],["name","Nome","text",true],["description","Descrição","textarea",false],["price_monthly","Preço mensal (R$)","number",true],["price_yearly","Preço anual (R$)","number",true],["max_users","Limite de usuários","number",false],["max_customers","Limite de clientes","number",false],["max_plants","Limite de usinas","number",false],["max_integrations","Limite de integrações","number",false],["history_days","Histórico (dias)","number",false],["api_requests_per_day","Requisições API/dia","number",false]]}
+ plans:{table:"saas_plans",title:"Planos",desc:"Defina preços e limites antes de comercializar.",fields:[["code","Código","text",true],["name","Nome","text",true],["description","Descrição","textarea",false],["price_monthly","Preço mensal (R$)","number",true],["price_yearly","Preço anual (R$)","number",true],["max_users","Limite de usuários","number",false],["max_customers","Limite de clientes","number",false],["max_plants","Limite de usinas","number",false],["max_integrations","Limite de integrações","number",false],["history_days","Histórico (dias)","number",false],["api_requests_per_day","Requisições API/dia","number",false]]},
+ subscriptions:{table:"saas_subscriptions",title:"Vincular plano à empresa",desc:"Atribua plano e situação administrativa. Esta tela não cobra dinheiro nem confirma pagamentos.",fields:[["company_id","Empresa assinante","text",true],["plan_id","Plano","text",true],["status","Situação da assinatura","text",true],["billing_period","Periodicidade","text",true],["trial_ends_at","Fim do teste","datetime-local",false],["current_period_start","Início do ciclo","datetime-local",false],["current_period_end","Fim do ciclo","datetime-local",false]]}
 };
 function toast(s){const t=$("toast");if(t){t.textContent=s;t.classList.add("show");setTimeout(()=>t.classList.remove("show"),3200)}}
 function head(kicker,title,desc,action){return '<div class="head"><div><div class="eyebrow">'+esc(kicker)+'</div><h1 class="h1">'+esc(title)+'</h1><p class="muted">'+esc(desc)+'</p></div>'+(action?'<button class="btn lime" data-solara-new="'+esc(action)+'">＋ Novo</button>':'')+'</div>'}
@@ -292,7 +293,7 @@ const colMap={
  audit:[["Data",r=>dt(r.created_at)],["Usuário",r=>String(r.actor_user_id||"").slice(0,8)],["Ação",r=>r.action],["Recurso",r=>r.resource_type],["ID do recurso",r=>r.resource_id],["Resultado",r=>r.outcome,"pill"]]
 };
 colMap.profiles=colMap.users;
-const editRolesByTable={customers:["platform_admin","company_admin","manager","commercial"],plants:["platform_admin","company_admin","manager","operator"],bills:["platform_admin","company_admin","manager","financial"],leads:["platform_admin","company_admin","manager","commercial"],tasks:["platform_admin","company_admin","manager","commercial"],proposals:["platform_admin","company_admin","manager","commercial"],contracts:["platform_admin","company_admin","manager","commercial","financial"],maintenance:["platform_admin","company_admin","manager","operator"]};
+const editRolesByTable={customers:["platform_admin","company_admin","manager","commercial"],plants:["platform_admin","company_admin","manager","operator"],bills:["platform_admin","company_admin","manager","financial"],leads:["platform_admin","company_admin","manager","commercial"],tasks:["platform_admin","company_admin","manager","commercial"],proposals:["platform_admin","company_admin","manager","commercial"],contracts:["platform_admin","company_admin","manager","commercial","financial"],maintenance:["platform_admin","company_admin","manager","operator"],subscriptions:["platform_admin"]};
 function renderTable(key,title,desc,addKind){
  const rows=rowsFor(key),cols=colMap[key]||[];
  const filtered=rows.filter(r=>cols.some(c=>String(c[1](r)??"").toLowerCase().includes(String(window.solaraSearch||"").toLowerCase())));
@@ -370,7 +371,7 @@ function field(name,label,type,required,value){
 async function platformPage(){
  const cs=rowsFor("companies"),ss=rowsFor("subscriptions"),ps=rowsFor("plans");
  let mrr=0;ss.filter(s=>s.status==="active").forEach(s=>{const p=ps.find(p=>p.id===s.plan_id);if(p)mrr+=s.billing_period==="yearly"?Number(p.price_yearly||0)/12:Number(p.price_monthly||0)});
- return head("GESTÃO DA PLATAFORMA","Administração Solara","Metadados globais, planos e assinaturas.")+'<div class="kpi-grid">'+moneyMetric("Empresas cadastradas",n(cs.length),"Organizações")+moneyMetric("Ativas",n(cs.filter(c=>c.status==="active").length),"Status ativo")+moneyMetric("Em teste",n(cs.filter(c=>c.status==="trial").length),"Período de avaliação")+moneyMetric("MRR estimado",brl(mrr),"Assinaturas ativas com plano/preço configurado")+'</div><div class="warning-note">MRR é calculado somente a partir dos preços e assinaturas cadastrados. Sem provedor de pagamento, não há confirmação automática de receita recebida.</div>'+renderTable("companies","Empresas assinantes","Status e identificação das empresas.","companies")+renderTable("plans","Planos","Limites e preços configurados.","plans")+renderTable("subscriptions","Assinaturas","Situação registrada; atualizações de pagamento dependem de webhook autenticado.","");
+ return head("GESTÃO DA PLATAFORMA","Administração Solara","Metadados globais, planos e assinaturas.")+'<div class="kpi-grid">'+moneyMetric("Empresas cadastradas",n(cs.length),"Organizações")+moneyMetric("Ativas",n(cs.filter(c=>c.status==="active").length),"Status ativo")+moneyMetric("Em teste",n(cs.filter(c=>c.status==="trial").length),"Período de avaliação")+moneyMetric("MRR estimado",brl(mrr),"Assinaturas ativas com plano/preço configurado")+'</div><div class="warning-note">MRR é calculado somente a partir dos preços e assinaturas cadastrados. Sem provedor de pagamento, não há confirmação automática de receita recebida.</div>'+renderTable("companies","Empresas assinantes","Status e identificação das empresas.","companies")+renderTable("plans","Planos","Limites e preços configurados.","plans")+renderTable("subscriptions","Assinaturas","Situação registrada; atualizações de pagamento dependem de webhook autenticado.","subscriptions");
 }
 async function subPage(){
  const ss=rowsFor("subscriptions"),s=ss[0];
@@ -432,12 +433,14 @@ function fieldInput(f){
  const options={
   role:[["company_admin","Administrador da empresa"],["manager","Gestor"],["operator","Operador técnico"],["commercial","Comercial"],["financial","Financeiro"],["support","Atendimento"],["customer","Cliente final"]],
   task_type:[["call","Ligação"],["email","E-mail"],["meeting","Reunião"],["follow_up","Retorno"],["other","Outro"]],
+  billing_period:[["monthly","Mensal"],["yearly","Anual"]],
   maintenance_type:[["preventive","Preventiva"],["corrective","Corretiva"],["inspection","Inspeção"]],
   priority:openedKind==="maintenance"?[["low","Baixa"],["normal","Normal"],["high","Alta"],["critical","Crítica"]]:[["low","Baixa"],["normal","Normal"],["high","Alta"],["urgent","Urgente"]],
   status:openedKind==="companies"?[["trial","Em teste"],["active","Ativa"],["suspended","Suspensa"]]:openedKind==="customers"?[["active","Ativo"],["inactive","Inativo"]]:openedKind==="plants"?[["active","Ativa"],["inactive","Inativa"],["maintenance","Manutenção"]]:null,
   payment_status:[["pending","Pendente"],["paid","Paga"],["overdue","Vencida"],["contested","Contestada"]],
   stage:[["new","Novo"],["first_contact","Primeiro contato"],["contacted","Contato feito"],["qualified","Qualificado"],["meeting","Reunião/diagnóstico"],["diagnosis","Diagnóstico"],["proposal","Proposta enviada"],["negotiation","Negociação"],["won","Ganho"],["lost","Perdido"]]
  };
+ if(name==="status"&&openedKind==="subscriptions")return '<label>'+esc(label)+'<select name="status" required><option value="trial">Em teste</option><option value="active">Ativa</option><option value="past_due">Em atraso</option><option value="suspended">Suspensa</option><option value="canceled">Cancelada</option></select></label>';
  if(options[name]){
   const textLabels={role:"Perfil de acesso",task_type:"Tipo de tarefa",maintenance_type:"Tipo de manutenção",priority:"Prioridade",status:"Situação da empresa"};
   return '<label>'+esc(textLabels[name]||label)+'<select name="'+esc(name)+'" '+(req?"required":"")+'>'+options[name].map(o=>'<option value="'+esc(o[0])+'">'+esc(o[1])+'</option>').join("")+'</select></label>';
@@ -448,7 +451,11 @@ function fieldInput(f){
  }
  if(name==="company_id"&&profile.role==="platform_admin"){
   const data=rowsFor("companies");
-  return '<label>'+esc(label)+'<select name="'+esc(name)+'"><option value="">Selecione uma empresa...</option>'+data.map(x=>'<option value="'+esc(x.id)+'">'+esc(x.name)+'</option>').join("")+'</select></label>';
+  return '<label>'+esc(label)+'<select name="'+esc(name)+'" '+(req?"required":"")+'><option value="">Selecione uma empresa...</option>'+data.map(x=>'<option value="'+esc(x.id)+'">'+esc(x.name)+'</option>').join("")+'</select></label>';
+ }
+ if(name==="plan_id"){
+  const data=rowsFor("plans");
+  return '<label>'+esc(label)+'<select name="plan_id" '+(req?"required":"")+'><option value="">Selecione um plano...</option>'+data.map(x=>'<option value="'+esc(x.id)+'">'+esc(x.name)+' — '+esc(brl(x.price_monthly))+'/mês</option>').join("")+'</select></label>';
  }
  if(type==="customer"||type==="plant"||type==="lead"){
   const key=type==="customer"?"customers":type==="plant"?"plants":"leads";const data=rowsFor(key);
@@ -459,7 +466,7 @@ function fieldInput(f){
 }
 let openedKind=null,editingRecord=null;
 function openForm(kind,record=null){
- const editRoles={customers:["platform_admin","company_admin","manager","commercial"],plants:["platform_admin","company_admin","manager","operator"],bills:["platform_admin","company_admin","manager","financial"],leads:["platform_admin","company_admin","manager","commercial"],tasks:["platform_admin","company_admin","manager","commercial"],proposals:["platform_admin","company_admin","manager","commercial"],contracts:["platform_admin","company_admin","manager","commercial","financial"],maintenance:["platform_admin","company_admin","manager","operator"]};
+ const editRoles={subscriptions:["platform_admin"],customers:["platform_admin","company_admin","manager","commercial"],plants:["platform_admin","company_admin","manager","operator"],bills:["platform_admin","company_admin","manager","financial"],leads:["platform_admin","company_admin","manager","commercial"],tasks:["platform_admin","company_admin","manager","commercial"],proposals:["platform_admin","company_admin","manager","commercial"],contracts:["platform_admin","company_admin","manager","commercial","financial"],maintenance:["platform_admin","company_admin","manager","operator"]};
  if(record&&(!editRoles[kind]||!editRoles[kind].includes(profile.role))){toast("Seu perfil não pode editar este registro.");return}
  if(kind==="companies"&&profile.role!=="platform_admin"){toast("Somente o administrador Solara pode cadastrar empresas.");return}
  if(kind==="plans"&&profile.role!=="platform_admin"){toast("Somente o administrador Solara pode gerenciar planos.");return}
@@ -484,7 +491,13 @@ async function saveForm(e){
   const payload={...raw};
   const numeric=["installed_capacity_kwp","expected_daily_kwh","monthly_generation_goal_kwh","latitude","longitude","consumption_kwh","amount_without_solar","amount_paid","estimated_savings","estimated_capacity_kwp","estimated_monthly_value","tariff_per_kwh","amount","price_monthly","price_yearly","max_users","max_customers","max_plants","max_integrations","history_days","api_requests_per_day","polling_interval_minutes"];
   numeric.forEach(k=>{if(payload[k]!==undefined&&payload[k]!==null)payload[k]=Number(payload[k])});
-  if(openedKind!=="companies"&&openedKind!=="plans")payload.company_id=company.id;
+  if(openedKind==="subscriptions"){
+   if(profile.role!=="platform_admin")throw new Error("Somente o administrador Solara pode vincular planos.");
+   if(payload.trial_ends_at)payload.trial_ends_at=new Date(payload.trial_ends_at).toISOString();
+   if(payload.current_period_start)payload.current_period_start=new Date(payload.current_period_start).toISOString();
+   if(payload.current_period_end)payload.current_period_end=new Date(payload.current_period_end).toISOString();
+   if(!payload.plan_id||!payload.company_id)throw new Error("Selecione a empresa e o plano.");
+  } else if(openedKind!=="companies"&&openedKind!=="plans")payload.company_id=company.id;
   if(openedKind==="customers"&&!editingRecord&&!payload.status)payload.status="active";
   if(openedKind==="plants"){if(!editingRecord&&!payload.status)payload.status="active";payload.inverter_integration=payload.inverter_integration||"manual";if(payload.latitude===null)delete payload.latitude;if(payload.longitude===null)delete payload.longitude}
   if(openedKind==="bills"){payload.amount_paid=Number(payload.amount_paid||0);payload.consumption_kwh=Number(payload.consumption_kwh||0);payload.estimated_savings=Number(payload.estimated_savings||0);payload.payment_status=payload.paid_at?"paid":(payload.payment_status||"pending")}
@@ -497,7 +510,8 @@ async function saveForm(e){
   if(openedKind==="integrations"){payload.created_by=session.user.id;payload.status="pending";payload.polling_interval_minutes=Number(payload.polling_interval_minutes||60)}
   if(openedKind==="companies")payload.slug=String(payload.slug||payload.name).toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"");
   if(openedKind==="plans"){payload.is_active=true;["max_users","max_customers","max_plants","max_integrations","history_days","api_requests_per_day"].forEach(k=>{if(payload[k]===null)delete payload[k]})}
-  const write=editingRecord?await db.from(spec.table).update(payload).eq("id",editingRecord.id).eq("company_id",company.id).select("id").maybeSingle():await db.from(spec.table).insert(payload).select("id").maybeSingle();if(write.error)throw write.error;
+  const tenantForWrite=openedKind==="subscriptions"?(editingRecord?.company_id||payload.company_id):company.id;
+  const write=editingRecord?await db.from(spec.table).update(payload).eq("id",editingRecord.id).eq("company_id",tenantForWrite).select("id").maybeSingle():await db.from(spec.table).insert(payload).select("id").maybeSingle();if(write.error)throw write.error;
   if(openedKind!=="companies"&&openedKind!=="plans"){
    try{await db.from("audit_events").insert({company_id:company.id,actor_user_id:session.user.id,action:openedKind+(editingRecord?".updated":".created"),resource_type:spec.table,resource_id:editingRecord?.id?String(editingRecord.id):(write.data?.id?String(write.data.id):null),outcome:"success",details:{fields:Object.keys(payload).filter(k=>!["company_id","id"].includes(k))}})}catch(_){}
   }
