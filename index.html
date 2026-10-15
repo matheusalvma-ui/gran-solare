@@ -71,6 +71,7 @@ const configured = !SUPABASE_URL.includes('SEU-PROJETO') && !SUPABASE_PUBLISHABL
 const supabase = createClient(SUPABASE_URL,SUPABASE_PUBLISHABLE_KEY,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}});
 const $=id=>document.getElementById(id);
 let user=null,profile=null,company=null,page='dashboard',search='',currentType=null;
+let authFailures=0,authLockedUntil=0,authInFlight=false;
 const cache={customers:[],plants:[],generation:[],bills:[],tickets:[],leads:[]};
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const money=n=>Number(n||0).toLocaleString('pt-BR',{style:'currency',currency:'BRL'});
@@ -167,7 +168,27 @@ function openModal(type){
  currentType=type;const c=config[type];$('modal-title').textContent=c.title;$('form-fields').innerHTML=c.fields.map(inputHtml).join('');err('form-error','');$('modal-backdrop').classList.add('open');
 }
 function closeModal(){$('modal-backdrop').classList.remove('open')}
-$('login-form').addEventListener('submit',async e=>{e.preventDefault();err('login-error','');if(!configured){err('login-error','Configure as credenciais do Supabase no código antes de publicar.');return}const {data,error}=await supabase.auth.signInWithPassword({email:$('email').value.trim(),password:$('password').value});if(error){err('login-error','Não foi possível entrar: '+error.message);return}user=data.user;await loadProfileAndApp()});
+$('login-form').addEventListener('submit',async e=>{
+ e.preventDefault();err('login-error','');
+ if(authInFlight)return;
+ if(Date.now()<authLockedUntil){err('login-error','Muitas tentativas recentes. Aguarde um minuto antes de tentar novamente.');return}
+ const button=$('login-form').querySelector('button[type="submit"]');
+ authInFlight=true;if(button){button.disabled=true;button.textContent='Verificando...'}
+ try{
+  if(!configured){err('login-error','A autenticação não está configurada. Avise o administrador.');return}
+  const {data,error}=await supabase.auth.signInWithPassword({email:$('email').value.trim(),password:$('password').value});
+  if(error){
+   authFailures++;
+   const m=String(error.message||'').toLowerCase();
+   if(error.status===429||m.includes('too many requests')||m.includes('rate limit')){authLockedUntil=Date.now()+60000;err('login-error','Muitas tentativas de acesso. Aguarde um minuto e tente novamente.');return}
+   if(m.includes('email not confirmed')){err('login-error','Confirme seu e-mail pelo link enviado antes de entrar.');return}
+   if(authFailures>=5){authFailures=0;authLockedUntil=Date.now()+60000;err('login-error','Várias tentativas sem sucesso. O acesso foi pausado por um minuto.');return}
+   err('login-error','E-mail ou senha incorretos, ou acesso indisponível. Confira os dados e tente novamente.');return
+  }
+  authFailures=0;authLockedUntil=0;user=data.user;await loadProfileAndApp();
+ }catch(ex){err('login-error','Não foi possível concluir o acesso. Verifique sua conexão e tente novamente.')}
+ finally{authInFlight=false;if(button){button.disabled=false;button.textContent='Entrar'}}
+});
 $('forgot').addEventListener('click',async()=>{if(!configured){err('login-error','Configure as credenciais do Supabase primeiro.');return}const email=$('email').value.trim();if(!email){err('login-error','Informe seu e-mail para receber o link de recuperação.');return}const {error}=await supabase.auth.resetPasswordForEmail(email,{redirectTo:location.origin});err('login-error',error?error.message:'Se o e-mail estiver cadastrado, você receberá instruções para redefinir a senha.')});
 $('logout').addEventListener('click',async()=>{await supabase.auth.signOut();user=profile=company=null;setLoggedIn(false)});
 $('nav').addEventListener('click',e=>{const b=e.target.closest('[data-page]');if(!b)return;page=b.dataset.page;search='';$('sidebar').classList.remove('open');render()});
