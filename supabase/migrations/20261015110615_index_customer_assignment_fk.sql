@@ -1,0 +1,1 @@
+CREATE INDEX IF NOT EXISTS idx_customers_assigned_to ON public.customers(assigned_to);
