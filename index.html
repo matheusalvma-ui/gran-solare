@@ -25,10 +25,10 @@
 <div id="modal-backdrop" class="modal-backdrop"><div class="modal"><div class="modal-head"><h2 id="modal-title">Novo cadastro</h2><button class="close" id="modal-close">✕</button></div><form id="record-form" class="form"><div id="form-fields" class="form"></div><div id="form-error" class="error"></div><div style="display:flex;justify-content:flex-end;gap:8px"><button class="btn" id="modal-cancel" type="button">Cancelar</button><button class="btn primary" type="submit">Salvar</button></div></form></div></div><div id="toast" class="toast"></div>
 <script type="module">
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
-/* Configure estes dois valores com os dados do seu projeto Supabase.
+/* Valores configurados para o projeto Supabase da Solara Energia.
    A chave publishable/anon pode ficar no navegador; NUNCA use service_role aqui. */
-const SUPABASE_URL = 'https://SEU-PROJETO.supabase.co';
-const SUPABASE_PUBLISHABLE_KEY = 'SUA_CHAVE_PUBLISHABLE';
+const SUPABASE_URL = 'https://dbfxmjxigrjybxappxlj.supabase.co';
+const SUPABASE_PUBLISHABLE_KEY = 'sb_publishable_TS8637sLvINvMxNJyOFqcw__sZTSNMn';
 const configured = !SUPABASE_URL.includes('SEU-PROJETO') && !SUPABASE_PUBLISHABLE_KEY.includes('SUA_CHAVE');
 const supabase = createClient(SUPABASE_URL,SUPABASE_PUBLISHABLE_KEY,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}});
 const $=id=>document.getElementById(id);
