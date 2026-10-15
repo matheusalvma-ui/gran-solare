@@ -5,8 +5,8 @@ Atualizado em 15/10/2026.
 ## Repositório e deploy
 
 - Código: [GitHub — matheusalvma-ui/gran-solare](https://github.com/matheusalvma-ui/gran-solare), branch `main`.
-- Aplicação: [deploy de produção Vercel](https://gran-solare-eum95r5z2-matheusalvma-uis-projects.vercel.app).
-- Deploy verificado: estado `READY`, commit `234fd033a772d22441fd3b0b1977d1a4e2783428`.
+- Aplicação: [https://gran-solare.vercel.app](https://gran-solare.vercel.app) (domínio de produção verificado no projeto Vercel).
+- O deploy mais recente consultado durante esta implementação estava em estado `READY`; a compilação de produção é acionada pelos commits da branch `main`.
 - Backend: Supabase project `dbfxmjxigrjybxappxlj`.
 - A interface usa apenas a chave pública publishable no navegador; segredos administrativos ficam no ambiente da Edge Function.
 
