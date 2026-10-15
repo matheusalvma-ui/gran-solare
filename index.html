@@ -251,7 +251,7 @@ function pills(value){const m={active:"Ativo",inactive:"Inativo",trial:"Em teste
 const colMap={
  customers:[["Cliente",r=>r.name],["CPF/CNPJ",r=>r.tax_id],["E-mail",r=>r.email],["Telefone",r=>r.phone],["Cidade",r=>[r.city,r.state].filter(Boolean).join("/")],["Concessionária",r=>r.utility_name],["Status",r=>r.status,"pill"]],
  plants:[["Usina",r=>r.name],["Cliente",r=>customerName(r.customer_id)],["Potência",r=>r.installed_capacity_kwp?n(r.installed_capacity_kwp)+" kWp":"—"],["Inversor",r=>r.inverter_brand],["Última comunicação",r=>dt(r.last_seen_at)],["Status",r=>r.status,"pill"]],
- bills:[["Cliente",r=>customerName(r.customer_id)],["Referência",r=>r.bill_reference],["Competência",r=>dt(r.billing_period_start)],["Consumo",r=>n(r.consumption_kwh)+" kWh"],["Vencimento",r=>dt(r.due_date)],["Valor pago",r=>brl(r.amount_paid)],["Economia cadastrada",r=>brl(r.estimated_savings)],["Status",r=>r.payment_status||((r.paid_at)?"paid":(r.due_date&&r.due_date<iso()?"overdue":"pending")),"pill"]],
+ bills:[["Cliente",r=>customerName(r.customer_id)],["Referência",r=>r.bill_reference],["Competência",r=>dt(r.billing_period_start)],["Consumo",r=>n(r.consumption_kwh)+" kWh"],["Vencimento",r=>dt(r.due_date)],["Valor pago",r=>brl(r.amount_paid)],["Economia cadastrada",r=>brl(r.estimated_savings)],["Status",r=>r.paid_at?"paid":(r.due_date&&r.due_date<iso()?"overdue":(r.payment_status||"pending")),"pill"]],
  generation:[["Usina",r=>plantName(r.solar_plant_id)],["Início",r=>dt(r.period_start)],["Fim",r=>dt(r.period_end)],["Geração",r=>n(r.generated_kwh)+" kWh"],["Fonte",r=>r.source]],
  tickets:[["Protocolo",r=>String(r.id||"").slice(0,8).toUpperCase()],["Assunto",r=>r.subject],["Prioridade",r=>r.priority,"pill"],["Status",r=>r.status,"pill"],["Abertura",r=>dt(r.created_at)],["Ação",r=>r.status,"ticket"]],
  leads:[["Lead",r=>r.name],["E-mail",r=>r.email],["Telefone",r=>r.phone],["Origem",r=>r.source],["Etapa",r=>r.stage,"pill"],["Valor mensal",r=>brl(r.estimated_monthly_value)]],
@@ -270,6 +270,7 @@ const colMap={
  companies:[["Empresa",r=>r.name],["Slug",r=>r.slug],["Cadastro",r=>dt(r.created_at)],["Status",r=>r.status,"pill"]],
  audit:[["Data",r=>dt(r.created_at)],["Usuário",r=>String(r.actor_user_id||"").slice(0,8)],["Ação",r=>r.action],["Recurso",r=>r.resource_type],["ID do recurso",r=>r.resource_id],["Resultado",r=>r.outcome,"pill"]]
 };
+colMap.profiles=colMap.users;
 function renderTable(key,title,desc,addKind){
  const rows=rowsFor(key);const cols=colMap[key]||[];const filtered=rows.filter(r=>cols.some(c=>String(c[1](r)??"").toLowerCase().includes(String(window.solaraSearch||"").toLowerCase())));
  let out=head("GESTÃO",title,desc,addKind)+'<div class="panel"><div class="toolbar"><input class="field" id="solara-search" placeholder="Pesquisar registros..." value="'+esc(window.solaraSearch||"")+'"><span class="muted">'+filtered.length+' registro(s)</span></div><div class="table-wrap"><table><thead><tr>'+cols.map(c=>'<th>'+esc(c[0])+'</th>').join("")+'</tr></thead><tbody>';
@@ -395,11 +396,23 @@ async function loadContext(){
  if(co.error||!co.data){$("content").innerHTML='<div class="panel"><h2>Empresa não encontrada</h2><p>Confira o vínculo deste usuário.</p></div>';return}
  company=co.data;
  if(company.status==="suspended"&&profile.role!=="platform_admin"){await db.auth.signOut();$("content").innerHTML='<div class="panel"><h2>Empresa suspensa</h2><p>O acesso está bloqueado.</p></div>';return}
+ if(profile.role!=="platform_admin"){
+  const sr=await db.from("saas_subscriptions").select("status").eq("company_id",profile.company_id).order("created_at",{ascending:false}).limit(1).maybeSingle();
+  if(!sr.error&&sr.data&&["suspended","canceled"].includes(sr.data.status)){await db.auth.signOut();$("content").innerHTML='<div class="panel"><h2>Assinatura suspensa</h2><p>O acesso da organização está suspenso ou encerrado. Entre em contato com a administração.</p></div>';return}
+ }
  $("company-name").textContent=company.name;$("user-role").textContent=profile.role;$("user-email").textContent=s.user.email||"";
  await render();
 }
 function fieldInput(f){
  const name=f[0],label=f[1],type=f[2],req=f[3],v=f[4]||"";
+ if(name==="customer_id"){
+  const data=rowsFor("customers");
+  return '<label>'+esc(label)+'<select name="'+esc(name)+'" '+(req?"required":"")+'><option value="">Selecione um cliente...</option>'+data.map(x=>'<option value="'+esc(x.id)+'">'+esc(x.name)+'</option>').join("")+'</select></label>';
+ }
+ if(name==="company_id"&&profile.role==="platform_admin"){
+  const data=rowsFor("companies");
+  return '<label>'+esc(label)+'<select name="'+esc(name)+'"><option value="">Selecione uma empresa...</option>'+data.map(x=>'<option value="'+esc(x.id)+'">'+esc(x.name)+'</option>').join("")+'</select></label>';
+ }
  if(type==="customer"||type==="plant"||type==="lead"){
   const key=type==="customer"?"customers":type==="plant"?"plants":"leads";const data=rowsFor(key);
   return '<label>'+esc(label)+'<select name="'+esc(name)+'" '+(req?"required":"")+'><option value="">Selecione...</option>'+data.map(x=>'<option value="'+esc(x.id)+'">'+esc(x.name)+'</option>').join("")+'</select></label>';
